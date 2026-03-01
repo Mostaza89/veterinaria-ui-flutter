@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'buttons.dart';
+import 'botones.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({super.key});

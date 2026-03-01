@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../components/common_layout.dart';
-import '../components/buttons.dart';
+import '../widgets/diseno_comun.dart';
+import '../widgets/botones.dart';
 
 class ContactoPage extends StatelessWidget {
   const ContactoPage({super.key});

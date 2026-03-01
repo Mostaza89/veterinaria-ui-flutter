@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'top_header.dart';
-import 'navbar.dart';
-import 'footer.dart';
+import 'encabezado_superior.dart';
+import 'barra_navegacion.dart';
+import 'pie_de_pagina.dart';
 
 class CommonLayout extends StatelessWidget {
   final Widget child;
