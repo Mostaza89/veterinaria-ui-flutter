@@ -175,28 +175,47 @@ class _HeroBlogSection extends StatelessWidget {
   }
 }
 
-class _CategoriesSection extends StatelessWidget {
+class _CategoriesSection extends StatefulWidget {
   const _CategoriesSection();
+
+  @override
+  State<_CategoriesSection> createState() => _CategoriesSectionState();
+}
+
+class _CategoriesSectionState extends State<_CategoriesSection> {
+  int _selectedIndex = 0;
+  final List<String> _categories = [
+    'Todos',
+    'Nutrición',
+    'Salud',
+    'Higiene',
+    'Comportamiento',
+    'Estilo de Vida',
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
       color: Colors.white,
-      child: Row(
-        children: const [
-          _CategoryChip(text: 'Todos', isSelected: true),
-          SizedBox(width: 16),
-          _CategoryChip(text: 'Nutrición'),
-          SizedBox(width: 16),
-          _CategoryChip(text: 'Salud'),
-          SizedBox(width: 16),
-          _CategoryChip(text: 'Higiene'),
-          SizedBox(width: 16),
-          _CategoryChip(text: 'Comportamiento'),
-          SizedBox(width: 16),
-          _CategoryChip(text: 'Estilo de Vida'),
-        ],
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: List.generate(_categories.length, (index) {
+            return Padding(
+              padding: EdgeInsets.only(
+                right: index == _categories.length - 1 ? 0 : 16.0,
+              ),
+              child: GestureDetector(
+                onTap: () => setState(() => _selectedIndex = index),
+                child: _CategoryChip(
+                  text: _categories[index],
+                  isSelected: _selectedIndex == index,
+                ),
+              ),
+            );
+          }),
+        ),
       ),
     );
   }
@@ -210,20 +229,24 @@ class _CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      decoration: BoxDecoration(
-        color: isSelected ? const Color(0xFF29B6F6) : Colors.white,
-        borderRadius: BorderRadius.circular(30),
-        border: isSelected
-            ? null
-            : Border.all(color: const Color(0xFFEEEEEE), width: 1.5),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: isSelected ? Colors.white : Colors.blueGrey[700],
-          fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        decoration: BoxDecoration(
+          color: isSelected ? const Color(0xFF29B6F6) : Colors.white,
+          borderRadius: BorderRadius.circular(30),
+          border: isSelected
+              ? Border.all(color: const Color(0xFF29B6F6), width: 1.5)
+              : Border.all(color: const Color(0xFFEEEEEE), width: 1.5),
+        ),
+        child: Text(
+          text,
+          style: TextStyle(
+            color: isSelected ? Colors.white : Colors.blueGrey[700],
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+          ),
         ),
       ),
     );
@@ -488,8 +511,15 @@ class _BlogCardState extends State<_BlogCard> {
   }
 }
 
-class _PaginationSection extends StatelessWidget {
+class _PaginationSection extends StatefulWidget {
   const _PaginationSection();
+
+  @override
+  State<_PaginationSection> createState() => _PaginationSectionState();
+}
+
+class _PaginationSectionState extends State<_PaginationSection> {
+  int _currentPage = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -499,19 +529,41 @@ class _PaginationSection extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _PageDot(text: '<', isActive: false),
+          GestureDetector(
+            onTap: () {
+              if (_currentPage > 1) setState(() => _currentPage--);
+            },
+            child: const _PageDot(text: '<', isActive: false),
+          ),
           const SizedBox(width: 8),
-          _PageDot(text: '1', isActive: true),
+          GestureDetector(
+            onTap: () => setState(() => _currentPage = 1),
+            child: _PageDot(text: '1', isActive: _currentPage == 1),
+          ),
           const SizedBox(width: 8),
-          _PageDot(text: '2', isActive: false),
+          GestureDetector(
+            onTap: () => setState(() => _currentPage = 2),
+            child: _PageDot(text: '2', isActive: _currentPage == 2),
+          ),
           const SizedBox(width: 8),
-          _PageDot(text: '3', isActive: false),
+          GestureDetector(
+            onTap: () => setState(() => _currentPage = 3),
+            child: _PageDot(text: '3', isActive: _currentPage == 3),
+          ),
           const SizedBox(width: 8),
           const Text('...', style: TextStyle(color: Colors.blueGrey)),
           const SizedBox(width: 8),
-          _PageDot(text: '8', isActive: false),
+          GestureDetector(
+            onTap: () => setState(() => _currentPage = 8),
+            child: _PageDot(text: '8', isActive: _currentPage == 8),
+          ),
           const SizedBox(width: 8),
-          _PageDot(text: '>', isActive: false),
+          GestureDetector(
+            onTap: () {
+              if (_currentPage < 8) setState(() => _currentPage++);
+            },
+            child: const _PageDot(text: '>', isActive: false),
+          ),
         ],
       ),
     );
@@ -526,20 +578,26 @@ class _PageDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 40,
-      height: 40,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: isActive ? const Color(0xFF4FC3F7) : Colors.white,
-        shape: BoxShape.circle,
-        border: isActive ? null : Border.all(color: const Color(0xFFEEEEEE)),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: isActive ? Colors.white : Colors.blueGrey[700],
-          fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        width: 40,
+        height: 40,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: isActive ? const Color(0xFF4FC3F7) : Colors.white,
+          shape: BoxShape.circle,
+          border: isActive
+              ? Border.all(color: const Color(0xFF4FC3F7))
+              : Border.all(color: const Color(0xFFEEEEEE)),
+        ),
+        child: Text(
+          text,
+          style: TextStyle(
+            color: isActive ? Colors.white : Colors.blueGrey[700],
+            fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+          ),
         ),
       ),
     );

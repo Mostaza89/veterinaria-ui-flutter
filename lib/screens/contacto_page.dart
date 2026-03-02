@@ -284,9 +284,7 @@ class _ContactFormState extends State<_ContactForm> {
         _selectedService = null;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Formulario limpiado. Datos impresos en consola.'),
-        ),
+        const SnackBar(content: Text('Cita confirmada con éxito.')),
       );
     }
   }
