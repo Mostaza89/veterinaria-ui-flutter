@@ -50,10 +50,10 @@ class _HeroGlassSection extends StatelessWidget {
                 width: 450,
                 padding: const EdgeInsets.all(32),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.2),
+                  color: Theme.of(context).cardColor.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(24),
                   border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.3),
+                    color: Theme.of(context).cardColor.withValues(alpha: 0.3),
                     width: 1.5,
                   ),
                 ),
@@ -70,19 +70,19 @@ class _HeroGlassSection extends StatelessWidget {
                         color: Colors.black.withValues(alpha: 0.3),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
                             Icons.circle,
-                            color: Color(0xFF4FC3F7),
+                            color: Theme.of(context).colorScheme.secondary,
                             size: 10,
                           ),
                           SizedBox(width: 8),
                           Text(
                             'SERVICIOS INTEGRALES',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).cardColor,
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
                               letterSpacing: 1,
@@ -93,11 +93,11 @@ class _HeroGlassSection extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     RichText(
-                      text: const TextSpan(
+                      text: TextSpan(
                         style: TextStyle(
                           fontSize: 40,
                           fontWeight: FontWeight.w900,
-                          color: Colors.white,
+                          color: Theme.of(context).cardColor,
                           height: 1.1,
                           fontFamily: 'Roboto',
                         ),
@@ -105,7 +105,9 @@ class _HeroGlassSection extends StatelessWidget {
                           TextSpan(text: 'Cuidamos a quienes\n'),
                           TextSpan(
                             text: 'más amas',
-                            style: TextStyle(color: Color(0xFF29B6F6)),
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
                         ],
                       ),
@@ -114,7 +116,9 @@ class _HeroGlassSection extends StatelessWidget {
                     Text(
                       'Tecnología de vanguardia y amor incondicional en cada consulta. Descubre nuestra gama completa de cuidados especializados.',
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.9),
+                        color: Theme.of(
+                          context,
+                        ).cardColor.withValues(alpha: 0.9),
                         fontSize: 14,
                         height: 1.5,
                       ),
@@ -137,7 +141,7 @@ class _ServiciosGridSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       child: Column(
         children: [
           Row(
@@ -152,13 +156,16 @@ class _ServiciosGridSection extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blueGrey[900],
+                      color: Theme.of(context).textTheme.titleLarge?.color,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Soluciones veterinarias modernas para cada etapa de vida.',
-                    style: TextStyle(fontSize: 16, color: Colors.blueGrey[600]),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
+                    ),
                   ),
                 ],
               ),
@@ -167,22 +174,22 @@ class _ServiciosGridSection extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFEEEEEE),
+                      color: Theme.of(context).dividerColor,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.grid_view,
                       size: 20,
-                      color: Colors.black87,
+                      color: Theme.of(context).iconTheme.color,
                     ),
                   ),
                   const SizedBox(width: 8),
                   Container(
                     padding: const EdgeInsets.all(8),
-                    child: const Icon(
+                    child: Icon(
                       Icons.view_list,
                       size: 20,
-                      color: Colors.black38,
+                      color: Theme.of(context).disabledColor,
                     ),
                   ),
                 ],
@@ -197,7 +204,7 @@ class _ServiciosGridSection extends StatelessWidget {
             mainAxisSpacing: 32,
             crossAxisSpacing: 32,
             childAspectRatio: 0.65,
-            children: const [
+            children: [
               _ServiceDetailCard(
                 imageUrl:
                     'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=80&w=600&h=400',
@@ -292,9 +299,9 @@ class _ServiceDetailCardState extends State<_ServiceDetailCard> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: const Color(0xFFEEEEEE), width: 1.5),
+          border: Border.all(color: Theme.of(context).dividerColor, width: 1.5),
           boxShadow: _isHovering
               ? [
                   BoxShadow(
@@ -328,13 +335,13 @@ class _ServiceDetailCardState extends State<_ServiceDetailCard> {
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.9),
+                      color: Theme.of(context).cardColor.withValues(alpha: 0.9),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.bookmark_outline,
                       size: 18,
-                      color: Color(0xFF29B6F6),
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ),
@@ -344,7 +351,7 @@ class _ServiceDetailCardState extends State<_ServiceDetailCard> {
                   child: Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
@@ -355,7 +362,7 @@ class _ServiceDetailCardState extends State<_ServiceDetailCard> {
                     ),
                     child: Icon(
                       widget.icon,
-                      color: const Color(0xFF29B6F6),
+                      color: Theme.of(context).colorScheme.primary,
                       size: 28,
                     ),
                   ),
@@ -374,7 +381,7 @@ class _ServiceDetailCardState extends State<_ServiceDetailCard> {
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blueGrey[900],
+                        color: Theme.of(context).textTheme.titleLarge?.color,
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -382,7 +389,7 @@ class _ServiceDetailCardState extends State<_ServiceDetailCard> {
                       widget.desc,
                       style: TextStyle(
                         fontSize: 13,
-                        color: Colors.blueGrey[600],
+                        color: Theme.of(context).textTheme.bodyMedium?.color,
                         height: 1.5,
                       ),
                     ),
@@ -392,7 +399,7 @@ class _ServiceDetailCardState extends State<_ServiceDetailCard> {
                         padding: const EdgeInsets.only(bottom: 8),
                         child: Row(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.check_circle,
                               color: Color(0xFF4CAF50),
                               size: 16,
@@ -402,7 +409,9 @@ class _ServiceDetailCardState extends State<_ServiceDetailCard> {
                               child: Text(
                                 f,
                                 style: TextStyle(
-                                  color: Colors.blueGrey[700],
+                                  color: Theme.of(
+                                    context,
+                                  ).textTheme.bodyLarge?.color,
                                   fontSize: 13,
                                 ),
                               ),
@@ -438,26 +447,29 @@ class _EmergencyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFFE1F5FE), Color(0xFFFFFFFF)],
+        gradient: LinearGradient(
+          colors: [
+            Theme.of(context).colorScheme.primaryContainer,
+            Color(0xFFFFFFFF),
+          ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFEEEEEE)),
+        border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             padding: const EdgeInsets.all(24),
-            decoration: const BoxDecoration(
-              color: Colors.white,
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.emergency,
-              color: Color(0xFF29B6F6),
+              color: Theme.of(context).colorScheme.primary,
               size: 48,
             ),
           ),
@@ -467,7 +479,7 @@ class _EmergencyCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Colors.blueGrey[900],
+              color: Theme.of(context).textTheme.titleLarge?.color,
             ),
           ),
           const SizedBox(height: 16),
@@ -478,7 +490,7 @@ class _EmergencyCard extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
-                color: Colors.blueGrey[600],
+                color: Theme.of(context).textTheme.bodyMedium?.color,
                 height: 1.5,
               ),
             ),
@@ -505,9 +517,9 @@ class _DiagnosticoSection extends StatelessWidget {
       margin: const EdgeInsets.all(40),
       padding: const EdgeInsets.all(40),
       decoration: BoxDecoration(
-        color: const Color(0xFFFAFAFA),
+        color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(32),
-        border: Border.all(color: const Color(0xFFEEEEEE)),
+        border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: Row(
         children: [
@@ -521,7 +533,7 @@ class _DiagnosticoSection extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blueGrey[900],
+                    color: Theme.of(context).textTheme.titleLarge?.color,
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -529,7 +541,7 @@ class _DiagnosticoSection extends StatelessWidget {
                   'Nuestras instalaciones cuentan con laboratorio clínico propio, rayos X digitales y ecografía Doppler para obtener resultados precisos y rápidos.',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.blueGrey[600],
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
                     height: 1.5,
                   ),
                 ),
@@ -606,7 +618,7 @@ class _IconDetail extends StatelessWidget {
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.bold,
-            color: Colors.blueGrey[800],
+            color: Theme.of(context).textTheme.titleMedium?.color,
           ),
         ),
       ],

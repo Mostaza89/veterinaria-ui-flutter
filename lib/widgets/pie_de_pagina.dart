@@ -6,7 +6,7 @@ class Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       child: Column(
         children: [
@@ -21,10 +21,9 @@ class Footer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      children: [
-                        const Icon(
+                      children: [ Icon(
                           Icons.pets,
-                          color: Color(0xFF29B6F6),
+                          color: Theme.of(context).colorScheme.primary,
                           size: 24,
                         ),
                         const SizedBox(width: 8),
@@ -33,7 +32,7 @@ class Footer extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w900,
-                            color: Colors.blueGrey[900],
+                            color: Theme.of(context).textTheme.titleLarge?.color,
                           ),
                         ),
                       ],
@@ -42,7 +41,7 @@ class Footer extends StatelessWidget {
                     Text(
                       'Dedicados a la salud y bienestar de tus\nmascotas con amor y profesionalismo desde\n2010.',
                       style: TextStyle(
-                        color: Colors.blueGrey[600],
+                        color: Theme.of(context).textTheme.bodyMedium?.color,
                         height: 1.5,
                       ),
                     ),
@@ -61,7 +60,7 @@ class Footer extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
-                        color: Colors.blueGrey[900],
+                        color: Theme.of(context).textTheme.titleLarge?.color,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -84,7 +83,7 @@ class Footer extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
-                        color: Colors.blueGrey[900],
+                        color: Theme.of(context).textTheme.titleLarge?.color,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -102,22 +101,22 @@ class Footer extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 40),
-          const Divider(color: Color(0xFFEEEEEE), height: 1),
+          Divider(color: Theme.of(context).dividerColor, height: 1),
           const SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 '© 2023 VetCare Clínica Veterinaria. Todos los derechos reservados.',
-                style: TextStyle(color: Colors.blueGrey[400], fontSize: 12),
+                style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color, fontSize: 12),
               ),
               Row(
                 children: [
-                  Icon(Icons.facebook, color: Colors.blueGrey[400], size: 20),
+                  Icon(Icons.facebook, color: Theme.of(context).textTheme.bodySmall?.color, size: 20),
                   const SizedBox(width: 16),
                   Icon(
                     Icons.camera_alt_outlined,
-                    color: Colors.blueGrey[400],
+                    color: Theme.of(context).textTheme.bodySmall?.color,
                     size: 20,
                   ),
                 ],
@@ -148,7 +147,7 @@ class _FooterLink extends StatelessWidget {
                 ModalRoute.of(context)?.settings.name ?? '/';
             if (currentRoute != route) Navigator.pushNamed(context, route);
           },
-          child: Text(title, style: TextStyle(color: Colors.blueGrey[600])),
+          child: Text(title, style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color)),
         ),
       ),
     );
@@ -165,9 +164,9 @@ class _ContactRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 16, color: Colors.blueGrey[400]),
+        Icon(icon, size: 16, color: Theme.of(context).textTheme.bodySmall?.color),
         const SizedBox(width: 8),
-        Text(text, style: TextStyle(color: Colors.blueGrey[600], fontSize: 13)),
+        Text(text, style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color, fontSize: 13)),
       ],
     );
   }

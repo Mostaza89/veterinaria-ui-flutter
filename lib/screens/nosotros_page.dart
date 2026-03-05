@@ -28,7 +28,7 @@ class _HeroSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      color: const Color(0xFFF1FBFF),
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,18 +36,22 @@ class _HeroSection extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: const Color(0xFFE1F5FE),
+              color: Theme.of(context).colorScheme.primaryContainer,
               borderRadius: BorderRadius.circular(20),
             ),
-            child: const Row(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.circle, color: Color(0xFF4FC3F7), size: 10),
+                Icon(
+                  Icons.circle,
+                  color: Theme.of(context).colorScheme.secondary,
+                  size: 10,
+                ),
                 SizedBox(width: 6),
                 Text(
                   'SOBRE NOSOTROS',
                   style: TextStyle(
-                    color: Color(0xFF0288D1),
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
@@ -61,16 +65,18 @@ class _HeroSection extends StatelessWidget {
               style: TextStyle(
                 fontSize: 56,
                 fontWeight: FontWeight.w900,
-                color: Colors.blueGrey[900],
+                color: Theme.of(context).textTheme.titleLarge?.color,
                 height: 1.1,
                 fontFamily: 'Roboto',
               ),
-              children: const [
+              children: [
                 TextSpan(text: 'Cuidando familias,\n'),
                 TextSpan(text: 'una huella a la '),
                 TextSpan(
                   text: 'vez.',
-                  style: TextStyle(color: Color(0xFF29B6F6)),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
               ],
             ),
@@ -82,7 +88,7 @@ class _HeroSection extends StatelessWidget {
               'Dedicados a la salud y bienestar de tus mascotas desde 2010. Creemos en\nuna medicina veterinaria que combina la tecnología moderna con un\ncorazón cálido.',
               style: TextStyle(
                 fontSize: 18,
-                color: Colors.blueGrey[600],
+                color: Theme.of(context).textTheme.bodyMedium?.color,
                 height: 1.6,
               ),
             ),
@@ -99,7 +105,7 @@ class _HistoriaSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,12 +120,12 @@ class _HistoriaSection extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFE1F5FE),
+                        color: Theme.of(context).colorScheme.primaryContainer,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.history_edu,
-                        color: Color(0xFF0288D1),
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
                         size: 28,
                       ),
                     ),
@@ -129,7 +135,7 @@ class _HistoriaSection extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blueGrey[900],
+                        color: Theme.of(context).textTheme.titleLarge?.color,
                       ),
                     ),
                   ],
@@ -139,7 +145,7 @@ class _HistoriaSection extends StatelessWidget {
                   'Comenzamos como un pequeño consultorio con un gran sueño: brindar\nla mejor atención veterinaria con un enfoque humano y compasivo.\n\nA lo largo de los años, hemos crecido junto con nuestra comunidad,\nincorporando tecnología de vanguardia sin perder la calidez que nos\ncaracteriza. Hoy somos un referente en medicina preventiva y cirugía\navanzada, pero nuestra esencia sigue siendo la misma: tratar a cada\nmascota como si fuera nuestra.',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.blueGrey[600],
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
                     height: 1.6,
                   ),
                 ),
@@ -149,12 +155,12 @@ class _HistoriaSection extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           '14+',
                           style: TextStyle(
                             fontSize: 36,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF29B6F6),
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         Text(
@@ -162,7 +168,7 @@ class _HistoriaSection extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blueGrey[400],
+                            color: Theme.of(context).textTheme.bodySmall?.color,
                           ),
                         ),
                       ],
@@ -171,12 +177,12 @@ class _HistoriaSection extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           '5k+',
                           style: TextStyle(
                             fontSize: 36,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF29B6F6),
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         Text(
@@ -184,7 +190,7 @@ class _HistoriaSection extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blueGrey[400],
+                            color: Theme.of(context).textTheme.bodySmall?.color,
                           ),
                         ),
                       ],
@@ -220,7 +226,7 @@ class _EquipoSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
-      color: const Color(0xFFFAFAFA),
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
         children: [
           Text(
@@ -228,19 +234,22 @@ class _EquipoSection extends StatelessWidget {
             style: TextStyle(
               fontSize: 36,
               fontWeight: FontWeight.bold,
-              color: Colors.blueGrey[900],
+              color: Theme.of(context).textTheme.titleLarge?.color,
             ),
           ),
           const SizedBox(height: 16),
           Text(
             'Profesionales apasionados comprometidos con la excelencia médica y el trato\namoroso.',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16, color: Colors.blueGrey[600]),
+            style: TextStyle(
+              fontSize: 16,
+              color: Theme.of(context).textTheme.bodyMedium?.color,
+            ),
           ),
           const SizedBox(height: 64),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const [
+            children: [
               _DoctorProfile(
                 name: 'Dra. Ana Martínez',
                 spec: 'Cirugía General',
@@ -289,7 +298,10 @@ class _DoctorProfile extends StatelessWidget {
           width: 160,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(color: const Color(0xFF4FC3F7), width: 3),
+            border: Border.all(
+              color: Theme.of(context).colorScheme.secondary,
+              width: 3,
+            ),
             image: const DecorationImage(
               image: NetworkImage(
                 'https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&q=80&w=300&h=300',
@@ -304,15 +316,15 @@ class _DoctorProfile extends StatelessWidget {
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.blueGrey[900],
+            color: Theme.of(context).textTheme.titleLarge?.color,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           spec,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 14,
-            color: Color(0xFF29B6F6),
+            color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -320,12 +332,15 @@ class _DoctorProfile extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
           decoration: BoxDecoration(
-            color: Colors.blueGrey[50],
+            color: Theme.of(context).colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Text(
             exp,
-            style: TextStyle(fontSize: 12, color: Colors.blueGrey[600]),
+            style: TextStyle(
+              fontSize: 12,
+              color: Theme.of(context).textTheme.bodyMedium?.color,
+            ),
           ),
         ),
       ],
@@ -340,7 +355,7 @@ class _InstalacionesSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -356,13 +371,16 @@ class _InstalacionesSection extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blueGrey[900],
+                      color: Theme.of(context).textTheme.titleLarge?.color,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Espacios diseñados para la comodidad y seguridad de tus pacientes.',
-                    style: TextStyle(fontSize: 16, color: Colors.blueGrey[600]),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
+                    ),
                   ),
                 ],
               ),
@@ -372,18 +390,18 @@ class _InstalacionesSection extends StatelessWidget {
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: const Color(0xFFEEEEEE)),
+                      border: Border.all(color: Theme.of(context).dividerColor),
                     ),
-                    child: const Icon(Icons.arrow_back, size: 20),
+                    child: Icon(Icons.arrow_back, size: 20),
                   ),
                   const SizedBox(width: 8),
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: const Color(0xFFEEEEEE)),
+                      border: Border.all(color: Theme.of(context).dividerColor),
                     ),
-                    child: const Icon(Icons.arrow_forward, size: 20),
+                    child: Icon(Icons.arrow_forward, size: 20),
                   ),
                 ],
               ),
@@ -391,7 +409,7 @@ class _InstalacionesSection extends StatelessWidget {
           ),
           const SizedBox(height: 40),
           Row(
-            children: const [
+            children: [
               Expanded(
                 child: _FacilityCard(
                   imageUrl:
@@ -457,11 +475,17 @@ class _FacilityCard extends StatelessWidget {
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.blueGrey[900],
+            color: Theme.of(context).textTheme.titleLarge?.color,
           ),
         ),
         const SizedBox(height: 4),
-        Text(desc, style: TextStyle(fontSize: 14, color: Colors.blueGrey[500])),
+        Text(
+          desc,
+          style: TextStyle(
+            fontSize: 14,
+            color: Theme.of(context).textTheme.bodyMedium?.color,
+          ),
+        ),
       ],
     );
   }
@@ -474,19 +498,21 @@ class _BottomCtaSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      color: const Color(0xFFF1FBFF),
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.symmetric(vertical: 64, horizontal: 24),
       child: Column(
         children: [
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: const Color(0xFF29B6F6).withValues(alpha: 0.1),
+              color: Theme.of(
+                context,
+              ).colorScheme.primary.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.favorite,
-              color: Color(0xFF29B6F6),
+              color: Theme.of(context).colorScheme.primary,
               size: 40,
             ),
           ),
@@ -496,14 +522,17 @@ class _BottomCtaSection extends StatelessWidget {
             style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,
-              color: Colors.blueGrey[900],
+              color: Theme.of(context).textTheme.titleLarge?.color,
             ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
           Text(
             'Agenda tu cita hoy y forma parte de la familia VetCare.',
-            style: TextStyle(fontSize: 16, color: Colors.blueGrey[600]),
+            style: TextStyle(
+              fontSize: 16,
+              color: Theme.of(context).textTheme.bodyMedium?.color,
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 32),

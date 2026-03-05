@@ -27,7 +27,7 @@ class _HeroBlogSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xFFFAFAFA),
+      color: Theme.of(context).scaffoldBackgroundColor,
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 60),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,22 +43,22 @@ class _HeroBlogSection extends StatelessWidget {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE1F5FE),
+                    color: Theme.of(context).colorScheme.primaryContainer,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
                         Icons.energy_savings_leaf,
-                        color: Color(0xFF4FC3F7),
+                        color: Theme.of(context).colorScheme.secondary,
                         size: 14,
                       ),
                       SizedBox(width: 6),
                       Text(
                         'BLOG DE BIENESTAR',
                         style: TextStyle(
-                          color: Color(0xFF0288D1),
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                         ),
@@ -72,15 +72,17 @@ class _HeroBlogSection extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 48,
                       fontWeight: FontWeight.w900,
-                      color: Colors.blueGrey[900],
+                      color: Theme.of(context).textTheme.titleLarge?.color,
                       height: 1.1,
                       fontFamily: 'Roboto',
                     ),
-                    children: const [
+                    children: [
                       TextSpan(text: 'Cuidado Animal\n'),
                       TextSpan(
                         text: 'Bajo Cielos Azules',
-                        style: TextStyle(color: Color(0xFF29B6F6)),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                       ),
                     ],
                   ),
@@ -90,7 +92,7 @@ class _HeroBlogSection extends StatelessWidget {
                   'Descubre consejos brillantes, guías de hidratación y todo lo\nnecesario para mantener a tu mascota feliz y saludable con\nun toque refrescante.',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.blueGrey[600],
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
                     height: 1.6,
                   ),
                 ),
@@ -117,7 +119,7 @@ class _HeroBlogSection extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
@@ -131,11 +133,11 @@ class _HeroBlogSection extends StatelessWidget {
                       children: [
                         Container(
                           padding: const EdgeInsets.all(12),
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             color: Color(0xFFE8F5E9),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.verified,
                             color: Colors.green,
                             size: 24,
@@ -149,7 +151,9 @@ class _HeroBlogSection extends StatelessWidget {
                               'Artículo Destacado',
                               style: TextStyle(
                                 fontSize: 12,
-                                color: Colors.blueGrey[400],
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodySmall?.color,
                               ),
                             ),
                             Text(
@@ -157,7 +161,9 @@ class _HeroBlogSection extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.blueGrey[900],
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.titleLarge?.color,
                               ),
                             ),
                           ],
@@ -197,7 +203,7 @@ class _CategoriesSectionState extends State<_CategoriesSection> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -235,16 +241,23 @@ class _CategoryChip extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF29B6F6) : Colors.white,
+          color: isSelected
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(30),
           border: isSelected
-              ? Border.all(color: const Color(0xFF29B6F6), width: 1.5)
-              : Border.all(color: const Color(0xFFEEEEEE), width: 1.5),
+              ? Border.all(
+                  color: Theme.of(context).colorScheme.primary,
+                  width: 1.5,
+                )
+              : Border.all(color: Theme.of(context).dividerColor, width: 1.5),
         ),
         child: Text(
           text,
           style: TextStyle(
-            color: isSelected ? Colors.white : Colors.blueGrey[700],
+            color: isSelected
+                ? Theme.of(context).cardColor
+                : Theme.of(context).textTheme.bodyLarge?.color,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
           ),
         ),
@@ -260,7 +273,7 @@ class _BlogGridSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       child: GridView.count(
         crossAxisCount: 3,
         shrinkWrap: true,
@@ -268,7 +281,7 @@ class _BlogGridSection extends StatelessWidget {
         mainAxisSpacing: 32,
         crossAxisSpacing: 32,
         childAspectRatio: 0.8,
-        children: const [
+        children: [
           _BlogCard(
             imageUrl:
                 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=600&h=400',
@@ -368,9 +381,9 @@ class _BlogCardState extends State<_BlogCard> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: const Color(0xFFEEEEEE), width: 1.5),
+          border: Border.all(color: Theme.of(context).dividerColor, width: 1.5),
           boxShadow: _isHovering
               ? [
                   BoxShadow(
@@ -406,15 +419,15 @@ class _BlogCardState extends State<_BlogCard> {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.9),
+                      color: Theme.of(context).cardColor.withValues(alpha: 0.9),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Text(
                       widget.category,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF0288D1),
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                   ),
@@ -429,7 +442,7 @@ class _BlogCardState extends State<_BlogCard> {
                   children: [
                     Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.calendar_today,
                           size: 14,
                           color: Colors.blueGrey,
@@ -439,11 +452,13 @@ class _BlogCardState extends State<_BlogCard> {
                           widget.date,
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.blueGrey[500],
+                            color: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium?.color,
                           ),
                         ),
                         const SizedBox(width: 16),
-                        const Icon(
+                        Icon(
                           Icons.access_time,
                           size: 14,
                           color: Colors.blueGrey,
@@ -453,7 +468,9 @@ class _BlogCardState extends State<_BlogCard> {
                           widget.readTime,
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.blueGrey[500],
+                            color: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium?.color,
                           ),
                         ),
                       ],
@@ -464,7 +481,7 @@ class _BlogCardState extends State<_BlogCard> {
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blueGrey[900],
+                        color: Theme.of(context).textTheme.titleLarge?.color,
                         height: 1.3,
                       ),
                       maxLines: 2,
@@ -475,7 +492,7 @@ class _BlogCardState extends State<_BlogCard> {
                       widget.desc,
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.blueGrey[600],
+                        color: Theme.of(context).textTheme.bodyMedium?.color,
                         height: 1.5,
                       ),
                       maxLines: 3,
@@ -483,11 +500,11 @@ class _BlogCardState extends State<_BlogCard> {
                     ),
                     const Spacer(),
                     Row(
-                      children: const [
+                      children: [
                         Text(
                           'Leer más',
                           style: TextStyle(
-                            color: Color(0xFF29B6F6),
+                            color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                           ),
@@ -496,7 +513,7 @@ class _BlogCardState extends State<_BlogCard> {
                         Icon(
                           Icons.arrow_forward,
                           size: 16,
-                          color: Color(0xFF29B6F6),
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ],
                     ),
@@ -525,7 +542,7 @@ class _PaginationSectionState extends State<_PaginationSection> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 40),
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -551,7 +568,7 @@ class _PaginationSectionState extends State<_PaginationSection> {
             child: _PageDot(text: '3', isActive: _currentPage == 3),
           ),
           const SizedBox(width: 8),
-          const Text('...', style: TextStyle(color: Colors.blueGrey)),
+          Text('...', style: TextStyle(color: Colors.blueGrey)),
           const SizedBox(width: 8),
           GestureDetector(
             onTap: () => setState(() => _currentPage = 8),
@@ -586,16 +603,20 @@ class _PageDot extends StatelessWidget {
         height: 40,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: isActive ? const Color(0xFF4FC3F7) : Colors.white,
+          color: isActive
+              ? Theme.of(context).colorScheme.secondary
+              : Theme.of(context).cardColor,
           shape: BoxShape.circle,
           border: isActive
-              ? Border.all(color: const Color(0xFF4FC3F7))
-              : Border.all(color: const Color(0xFFEEEEEE)),
+              ? Border.all(color: Theme.of(context).colorScheme.secondary)
+              : Border.all(color: Theme.of(context).dividerColor),
         ),
         child: Text(
           text,
           style: TextStyle(
-            color: isActive ? Colors.white : Colors.blueGrey[700],
+            color: isActive
+                ? Theme.of(context).cardColor
+                : Theme.of(context).textTheme.bodyLarge?.color,
             fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
           ),
         ),
@@ -610,7 +631,7 @@ class _NewsletterSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xFFFAFAFA),
+      color: Theme.of(context).scaffoldBackgroundColor,
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 60),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -622,14 +643,18 @@ class _NewsletterSection extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.pets, color: Color(0xFF29B6F6), size: 28),
+                    Icon(
+                      Icons.pets,
+                      color: Theme.of(context).colorScheme.primary,
+                      size: 28,
+                    ),
                     const SizedBox(width: 8),
                     Text(
                       'VetCare',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w900,
-                        color: Colors.blueGrey[900],
+                        color: Theme.of(context).textTheme.titleLarge?.color,
                       ),
                     ),
                   ],
@@ -639,7 +664,7 @@ class _NewsletterSection extends StatelessWidget {
                   'Comprometidos con el bienestar de tu\nmascota a través de la medicina\nmoderna y el cuidado compasivo. Tu\nmejor amigo merece lo mejor.',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.blueGrey[600],
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
                     height: 1.5,
                   ),
                 ),
@@ -666,7 +691,7 @@ class _NewsletterSection extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
-                    color: Colors.blueGrey[900],
+                    color: Theme.of(context).textTheme.titleLarge?.color,
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -687,7 +712,7 @@ class _NewsletterSection extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
-                    color: Colors.blueGrey[900],
+                    color: Theme.of(context).textTheme.titleLarge?.color,
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -708,7 +733,7 @@ class _NewsletterSection extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
-                    color: Colors.blueGrey[900],
+                    color: Theme.of(context).textTheme.titleLarge?.color,
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -716,7 +741,7 @@ class _NewsletterSection extends StatelessWidget {
                   'Recibe tips para tu mascota\ndirectamente en tu bandeja de entrada.',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.blueGrey[600],
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
                     height: 1.5,
                   ),
                 ),
@@ -724,15 +749,18 @@ class _NewsletterSection extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: const Color(0xFFEEEEEE)),
+                    border: Border.all(color: Theme.of(context).dividerColor),
                   ),
-                  child: const TextField(
+                  child: TextField(
                     decoration: InputDecoration(
                       hintText: 'tucorreo@ejemplo.com',
                       border: InputBorder.none,
-                      hintStyle: TextStyle(color: Colors.black38, fontSize: 14),
+                      hintStyle: TextStyle(
+                        color: Theme.of(context).disabledColor,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                 ),
@@ -761,7 +789,7 @@ class _SocialIcon extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-      child: Icon(icon, color: Colors.white, size: 20),
+      child: Icon(icon, color: Theme.of(context).cardColor, size: 20),
     );
   }
 }
@@ -777,7 +805,10 @@ class _FooterLink extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 12),
       child: Text(
         title,
-        style: TextStyle(color: Colors.blueGrey[600], fontSize: 14),
+        style: TextStyle(
+          color: Theme.of(context).textTheme.bodyMedium?.color,
+          fontSize: 14,
+        ),
       ),
     );
   }

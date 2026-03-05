@@ -4,14 +4,14 @@ class JellyButton extends StatefulWidget {
   final String text;
   final IconData? icon;
   final VoidCallback onPressed;
-  final Color baseColor;
+  final Color? baseColor;
 
   const JellyButton({
     super.key,
     required this.text,
     required this.onPressed,
     this.icon,
-    this.baseColor = const Color(0xFF29B6F6), // Modern Light Blue
+    this.baseColor,
   });
 
   @override
@@ -67,12 +67,16 @@ class _JellyButtonState extends State<JellyButton>
             duration: const Duration(milliseconds: 200),
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             decoration: BoxDecoration(
-              color: widget.baseColor,
-              borderRadius: BorderRadius.circular(30),
+              color: widget.baseColor ?? Theme.of(context).colorScheme.primary,
+              borderRadius: BorderRadius.circular(50),
+              border: Border.all(color: Colors.transparent, width: 2),
               boxShadow: _isHovering
                   ? [
                       BoxShadow(
-                        color: widget.baseColor.withValues(alpha: 0.5),
+                        color:
+                            (widget.baseColor ??
+                                    Theme.of(context).colorScheme.primary)
+                                .withValues(alpha: 0.5),
                         blurRadius: 15,
                         offset: const Offset(0, 5),
                       ),
@@ -83,13 +87,17 @@ class _JellyButtonState extends State<JellyButton>
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (widget.icon != null) ...[
-                  Icon(widget.icon, color: Colors.white, size: 18),
+                  Icon(
+                    widget.icon,
+                    color: Theme.of(context).cardColor,
+                    size: 18,
+                  ),
                   const SizedBox(width: 8),
                 ],
                 Text(
                   widget.text,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: Theme.of(context).cardColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                   ),
@@ -134,22 +142,28 @@ class _OutlineHoverButtonState extends State<OutlineHoverButton> {
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           decoration: BoxDecoration(
-            color: _isHovering ? Colors.blueGrey[50] : Colors.white,
-            borderRadius: BorderRadius.circular(30),
-            border: Border.all(color: const Color(0xFFEEEEEE), width: 1),
+            color: _isHovering
+                ? Theme.of(context).colorScheme.surfaceContainerHighest
+                : Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(50),
+            border: Border.all(color: Theme.of(context).dividerColor, width: 2),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               if (widget.icon != null) ...[
-                Icon(widget.icon, color: const Color(0xFF29B6F6), size: 18),
+                Icon(
+                  widget.icon,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 18,
+                ),
                 const SizedBox(width: 8),
               ],
               Text(
                 widget.text,
                 style: TextStyle(
-                  color: Colors.blueGrey[800],
-                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).textTheme.titleMedium?.color,
+                  fontWeight: FontWeight.w900,
                   fontSize: 14,
                 ),
               ),

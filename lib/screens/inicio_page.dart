@@ -27,7 +27,7 @@ class _HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xFFFAFAFA),
+      color: Theme.of(context).cardColor,
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,29 +37,36 @@ class _HeroSection extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFE1F5FE),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.circle, color: Color(0xFF4FC3F7), size: 10),
-                      SizedBox(width: 6),
-                      Text(
-                        'ABIERTO AHORA',
-                        style: TextStyle(
-                          color: Color(0xFF0288D1),
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
+                Transform.translate(
+                  offset: const Offset(-4, 0),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.circle,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 10,
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 6),
+                        Text(
+                          'ABIERTO AHORA',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -68,15 +75,17 @@ class _HeroSection extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 56,
                       fontWeight: FontWeight.w900,
-                      color: Colors.blueGrey[900],
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
                       height: 1.1,
                       fontFamily: 'Roboto',
                     ),
-                    children: const [
+                    children: [
                       TextSpan(text: 'Cuidamos a tu\n'),
                       TextSpan(
                         text: 'mejor amigo',
-                        style: TextStyle(color: Color(0xFF29B6F6)),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                       ),
                     ],
                   ),
@@ -85,9 +94,9 @@ class _HeroSection extends StatelessWidget {
                 Text(
                   'Atención veterinaria integral con tecnología\nmoderna y el cariño de siempre. Tu mascota\nmerece lo mejor.',
                   style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.blueGrey[600],
-                    height: 1.6,
+                    fontSize: 20,
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                    height: 1.5,
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -113,13 +122,20 @@ class _HeroSection extends StatelessWidget {
           ),
           Expanded(
             flex: 1,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-              child: Image.network(
-                'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=800&h=600',
-                fit: BoxFit.cover,
-                height: 500,
-                width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 80.0,
+                vertical: 40.0,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(40),
+                child: Image.asset(
+                  'assets/images/dog.jpeg',
+                  fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
+                  height: 350,
+                  width: double.infinity,
+                ),
               ),
             ),
           ),
@@ -136,7 +152,7 @@ class _ServiciosSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       child: Column(
         children: [
           Text(
@@ -144,17 +160,20 @@ class _ServiciosSection extends StatelessWidget {
             style: TextStyle(
               fontSize: 36,
               fontWeight: FontWeight.bold,
-              color: Colors.blueGrey[900],
+              color: Theme.of(context).textTheme.bodyLarge?.color,
             ),
           ),
           const SizedBox(height: 16),
           Text(
             'Todo lo que tu mascota necesita en un solo lugar, con equipos de última generación.',
-            style: TextStyle(fontSize: 16, color: Colors.blueGrey[600]),
+            style: TextStyle(
+              fontSize: 16,
+              color: Theme.of(context).textTheme.bodyMedium?.color,
+            ),
           ),
           const SizedBox(height: 48),
           Row(
-            children: const [
+            children: [
               Expanded(
                 child: _ServiceCard(
                   icon: Icons.medical_services_outlined,
@@ -225,13 +244,13 @@ class _ServiceCardState extends State<_ServiceCard> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(32),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: const Color(0xFFEEEEEE)),
+          border: Border.all(color: Theme.of(context).dividerColor),
           boxShadow: _isHovering
               ? [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
+                    color: Theme.of(context).shadowColor.withValues(alpha: 0.1),
                     blurRadius: 20,
                     offset: const Offset(0, 10),
                   ),
@@ -244,12 +263,12 @@ class _ServiceCardState extends State<_ServiceCard> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFFE1F5FE),
+                color: Theme.of(context).colorScheme.primaryContainer,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
                 widget.icon,
-                color: const Color(0xFF0288D1),
+                color: Theme.of(context).colorScheme.primary,
                 size: 28,
               ),
             ),
@@ -259,7 +278,7 @@ class _ServiceCardState extends State<_ServiceCard> {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.blueGrey[900],
+                color: Theme.of(context).textTheme.bodyLarge?.color,
               ),
             ),
             const SizedBox(height: 12),
@@ -267,7 +286,7 @@ class _ServiceCardState extends State<_ServiceCard> {
               widget.desc,
               style: TextStyle(
                 fontSize: 14,
-                color: Colors.blueGrey[600],
+                color: Theme.of(context).textTheme.bodyMedium?.color,
                 height: 1.5,
               ),
             ),
@@ -285,7 +304,7 @@ class _PlanesSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
-      color: const Color(0xFFFAFAFA),
+      color: Theme.of(context).cardColor,
       child: Column(
         children: [
           Text(
@@ -293,19 +312,22 @@ class _PlanesSection extends StatelessWidget {
             style: TextStyle(
               fontSize: 36,
               fontWeight: FontWeight.bold,
-              color: Colors.blueGrey[900],
+              color: Theme.of(context).textTheme.bodyLarge?.color,
             ),
           ),
           const SizedBox(height: 16),
           Text(
             'Elige la mejor cobertura para la tranquilidad de tu familia.',
-            style: TextStyle(fontSize: 16, color: Colors.blueGrey[600]),
+            style: TextStyle(
+              fontSize: 16,
+              color: Theme.of(context).textTheme.bodyMedium?.color,
+            ),
           ),
           const SizedBox(height: 48),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               _PricingCard(
                 title: 'Plan Cachorro',
                 price: '\$500',
@@ -364,15 +386,20 @@ class _PricingCard extends StatelessWidget {
       width: 320,
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(24),
         border: isPopular
-            ? Border.all(color: const Color(0xFF4FC3F7), width: 2)
-            : Border.all(color: const Color(0xFFEEEEEE)),
+            ? Border.all(
+                color: Theme.of(context).colorScheme.tertiary,
+                width: 2,
+              )
+            : Border.all(color: Theme.of(context).dividerColor),
         boxShadow: isPopular
             ? [
                 BoxShadow(
-                  color: const Color(0xFF4FC3F7).withValues(alpha: 0.2),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.tertiary.withValues(alpha: 0.2),
                   blurRadius: 30,
                   offset: const Offset(0, 10),
                 ),
@@ -387,13 +414,13 @@ class _PricingCard extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 16),
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               decoration: BoxDecoration(
-                color: const Color(0xFF4FC3F7),
+                color: Theme.of(context).colorScheme.tertiary,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Text(
+              child: Text(
                 'MÁS POPULAR',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onTertiary,
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
                 ),
@@ -404,7 +431,7 @@ class _PricingCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.blueGrey[900],
+              color: Theme.of(context).textTheme.bodyLarge?.color,
             ),
           ),
           const SizedBox(height: 12),
@@ -417,12 +444,15 @@ class _PricingCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 48,
                   fontWeight: FontWeight.w900,
-                  color: Colors.blueGrey[900],
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
                 ),
               ),
               Text(
                 ' /año MXN',
-                style: TextStyle(fontSize: 14, color: Colors.blueGrey[400]),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Theme.of(context).textTheme.bodySmall?.color,
+                ),
               ),
             ],
           ),
@@ -432,17 +462,13 @@ class _PricingCard extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 12),
               child: Row(
                 children: [
-                  const Icon(
-                    Icons.check_circle,
-                    color: Color(0xFF4CAF50),
-                    size: 18,
-                  ),
+                  Icon(Icons.check_circle, color: Color(0xFF4CAF50), size: 18),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       f,
                       style: TextStyle(
-                        color: Colors.blueGrey[700],
+                        color: Theme.of(context).textTheme.bodyMedium?.color,
                         fontSize: 14,
                       ),
                     ),
@@ -460,14 +486,16 @@ class _PricingCard extends StatelessWidget {
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      backgroundColor: const Color(0xFFF5F5F5),
-                      foregroundColor: Colors.blueGrey[800],
+                      backgroundColor: Theme.of(context).hoverColor,
+                      foregroundColor: Theme.of(
+                        context,
+                      ).textTheme.bodyLarge?.color,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       'Ver detalles',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
@@ -486,7 +514,7 @@ class _TestimoniosSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       child: Column(
         children: [
           Text(
@@ -494,12 +522,12 @@ class _TestimoniosSection extends StatelessWidget {
             style: TextStyle(
               fontSize: 36,
               fontWeight: FontWeight.bold,
-              color: Colors.blueGrey[900],
+              color: Theme.of(context).textTheme.titleLarge?.color,
             ),
           ),
           const SizedBox(height: 48),
           Row(
-            children: const [
+            children: [
               Expanded(
                 child: _TestimonialCard(
                   name: 'María González',
@@ -550,9 +578,9 @@ class _TestimonialCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFFFAFAFA),
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFEEEEEE)),
+        border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -560,8 +588,13 @@ class _TestimonialCard extends StatelessWidget {
           Row(
             children: [
               CircleAvatar(
-                backgroundColor: const Color(0xFFE0E0E0),
-                child: Icon(Icons.person, color: Colors.white),
+                backgroundColor: Theme.of(
+                  context,
+                ).colorScheme.surfaceContainerHighest,
+                child: Icon(
+                  Icons.person,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
               ),
               const SizedBox(width: 12),
               Column(
@@ -571,12 +604,15 @@ class _TestimonialCard extends StatelessWidget {
                     name,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.blueGrey[900],
+                      color: Theme.of(context).textTheme.titleMedium?.color,
                     ),
                   ),
                   Text(
                     pet,
-                    style: TextStyle(fontSize: 12, color: Colors.blueGrey[400]),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context).textTheme.bodySmall?.color,
+                    ),
                   ),
                 ],
               ),
@@ -587,7 +623,7 @@ class _TestimonialCard extends StatelessWidget {
             '"$text"',
             style: TextStyle(
               fontStyle: FontStyle.italic,
-              color: Colors.blueGrey[600],
+              color: Theme.of(context).textTheme.bodyMedium?.color,
               height: 1.5,
             ),
           ),
@@ -595,7 +631,7 @@ class _TestimonialCard extends StatelessWidget {
           Row(
             children: List.generate(
               5,
-              (index) => const Icon(Icons.star, color: Colors.amber, size: 16),
+              (index) => Icon(Icons.star, color: Colors.amber, size: 16),
             ),
           ),
         ],
@@ -614,24 +650,27 @@ class _BottomCtaSection extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
       decoration: BoxDecoration(
-        color: const Color(0xFF29B6F6),
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(24),
       ),
       child: Column(
         children: [
-          const Text(
+          Text(
             '¿Listo para cuidar a tu mejor amigo?',
             style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             'Agenda tu cita hoy mismo y recibe un 10% de descuento en tu\nprimera consulta.',
-            style: TextStyle(fontSize: 16, color: Colors.white),
+            style: TextStyle(
+              fontSize: 16,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 32),
@@ -640,14 +679,14 @@ class _BottomCtaSection extends StatelessWidget {
               Navigator.pushNamed(context, '/contacto');
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              foregroundColor: const Color(0xFF29B6F6),
+              backgroundColor: Theme.of(context).colorScheme.onPrimary,
+              foregroundColor: Theme.of(context).colorScheme.primary,
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
             ),
-            child: const Text(
+            child: Text(
               'Reservar Cita Ahora',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
