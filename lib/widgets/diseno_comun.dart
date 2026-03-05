@@ -11,7 +11,10 @@ class CommonLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = MediaQuery.of(context).size.width < 900;
+
     return Scaffold(
+      drawer: isMobile ? const MobileDrawer() : null,
       body: Column(
         children: [
           const TopHeader(),

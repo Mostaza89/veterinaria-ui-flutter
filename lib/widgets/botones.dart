@@ -76,9 +76,9 @@ class _JellyButtonState extends State<JellyButton>
                         color:
                             (widget.baseColor ??
                                     Theme.of(context).colorScheme.primary)
-                                .withValues(alpha: 0.5),
-                        blurRadius: 15,
-                        offset: const Offset(0, 5),
+                                .withValues(alpha: 0.25),
+                        blurRadius: 25,
+                        offset: const Offset(0, 8),
                       ),
                     ]
                   : [],
@@ -146,7 +146,12 @@ class _OutlineHoverButtonState extends State<OutlineHoverButton> {
                 ? Theme.of(context).colorScheme.surfaceContainerHighest
                 : Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(50),
-            border: Border.all(color: Theme.of(context).dividerColor, width: 2),
+            border: Border.all(
+              color: _isHovering
+                  ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.5)
+                  : Theme.of(context).dividerColor.withValues(alpha: 0.5),
+              width: 2,
+            ),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,

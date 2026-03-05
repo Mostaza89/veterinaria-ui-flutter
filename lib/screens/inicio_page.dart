@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../widgets/diseno_comun.dart';
 import '../widgets/botones.dart';
 
@@ -26,17 +27,51 @@ class _HeroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).cardColor,
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            flex: 1,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final bool isMobile = constraints.maxWidth < 900;
+        final double paddingHorizontal = isMobile ? 24.0 : 40.0;
+        final double paddingVertical = isMobile ? 40.0 : 30.0;
+
+        return Container(
+          color: Theme.of(context).cardColor,
+          padding: EdgeInsets.symmetric(
+            horizontal: paddingHorizontal,
+            vertical: paddingVertical,
+          ),
+          child: isMobile
+              ? Column(
+                  children: [
+                    _buildTextColumn(context, isMobile: true),
+                    const SizedBox(height: 48),
+                    _buildImageColumn(context, isMobile: true),
+                  ],
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: _buildTextColumn(context, isMobile: false),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: _buildImageColumn(context, isMobile: false),
+                    ),
+                  ],
+                ),
+        );
+      },
+    );
+  }
+
+  Widget _buildTextColumn(BuildContext context, {required bool isMobile}) {
+    return Column(
+      crossAxisAlignment: isMobile
+          ? CrossAxisAlignment.center
+          : CrossAxisAlignment.start,
+      children:
+          [
                 Transform.translate(
                   offset: const Offset(-4, 0),
                   child: Container(
@@ -71,9 +106,10 @@ class _HeroSection extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 RichText(
+                  textAlign: isMobile ? TextAlign.center : TextAlign.start,
                   text: TextSpan(
                     style: TextStyle(
-                      fontSize: 56,
+                      fontSize: isMobile ? 40 : 56,
                       fontWeight: FontWeight.w900,
                       color: Theme.of(context).textTheme.bodyLarge?.color,
                       height: 1.1,
@@ -93,14 +129,18 @@ class _HeroSection extends StatelessWidget {
                 const SizedBox(height: 24),
                 Text(
                   'Atención veterinaria integral con tecnología\nmoderna y el cariño de siempre. Tu mascota\nmerece lo mejor.',
+                  textAlign: isMobile ? TextAlign.center : TextAlign.start,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: isMobile ? 16 : 20,
                     color: Theme.of(context).textTheme.bodyMedium?.color,
                     height: 1.5,
                   ),
                 ),
                 const SizedBox(height: 40),
                 Row(
+                  mainAxisAlignment: isMobile
+                      ? MainAxisAlignment.center
+                      : MainAxisAlignment.start,
                   children: [
                     JellyButton(
                       text: 'Agendar Cita',
@@ -117,30 +157,37 @@ class _HeroSection extends StatelessWidget {
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 80.0,
-                vertical: 40.0,
-              ),
-              child: ClipRRect(
+              ]
+              .animate(interval: 100.ms)
+              .fade(duration: 600.ms)
+              .slideY(begin: 0.05, duration: 600.ms),
+    );
+  }
+
+  Widget _buildImageColumn(BuildContext context, {required bool isMobile}) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 0 : 80.0,
+        vertical: isMobile ? 0 : 40.0,
+      ),
+      child:
+          ClipRRect(
                 borderRadius: BorderRadius.circular(40),
                 child: Image.asset(
                   'assets/images/dog.jpeg',
                   fit: BoxFit.cover,
                   alignment: Alignment.topCenter,
-                  height: 350,
+                  height: isMobile ? 250 : 350,
                   width: double.infinity,
                 ),
+              )
+              .animate()
+              .fade(duration: 800.ms)
+              .scale(
+                begin: const Offset(0.95, 0.95),
+                duration: 800.ms,
+                curve: Curves.easeOutCubic,
               ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -150,69 +197,129 @@ class _ServiciosSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
-      color: Theme.of(context).colorScheme.surface,
-      child: Column(
-        children: [
-          Text(
-            'Nuestros Servicios',
-            style: TextStyle(
-              fontSize: 36,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).textTheme.bodyLarge?.color,
-            ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final bool isMobile = constraints.maxWidth < 900;
+        return Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 24 : 40,
+            vertical: 40,
           ),
-          const SizedBox(height: 16),
-          Text(
-            'Todo lo que tu mascota necesita en un solo lugar, con equipos de última generación.',
-            style: TextStyle(
-              fontSize: 16,
-              color: Theme.of(context).textTheme.bodyMedium?.color,
-            ),
-          ),
-          const SizedBox(height: 48),
-          Row(
+          color: Theme.of(context).colorScheme.surface,
+          width: double.infinity,
+          child: Column(
             children: [
-              Expanded(
-                child: _ServiceCard(
-                  icon: Icons.medical_services_outlined,
-                  title: 'Medicina General',
-                  desc:
-                      'Consultas diarias, diagnóstico preciso y chequeos preventivos integrales.',
+              Text(
+                'Nuestros Servicios',
+                style: TextStyle(
+                  fontSize: isMobile ? 28 : 36,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
                 ),
+                textAlign: TextAlign.center,
               ),
-              SizedBox(width: 24),
-              Expanded(
-                child: _ServiceCard(
-                  icon: Icons.medication_liquid_outlined,
-                  title: 'Cirugía Avanzada',
-                  desc:
-                      'Quirófano equipado con tecnología de punta y monitoreo constante.',
+              const SizedBox(height: 16),
+              Text(
+                'Todo lo que tu mascota necesita en un solo lugar, con equipos de última generación.',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Theme.of(context).textTheme.bodyMedium?.color,
                 ),
+                textAlign: TextAlign.center,
               ),
-              SizedBox(width: 24),
-              Expanded(
-                child: _ServiceCard(
-                  icon: Icons.vaccines_outlined,
-                  title: 'Vacunación',
-                  desc:
-                      'Protocolos completos de inmunización para todas las etapas de vida.',
+              const SizedBox(height: 48),
+              if (isMobile)
+                Column(
+                  children:
+                      [
+                            _ServiceCard(
+                              icon: Icons.medical_services_outlined,
+                              title: 'Medicina General',
+                              desc:
+                                  'Consultas diarias, diagnóstico preciso y chequeos preventivos integrales.',
+                            ),
+                            const SizedBox(height: 24),
+                            _ServiceCard(
+                              icon: Icons.medication_liquid_outlined,
+                              title: 'Cirugía Avanzada',
+                              desc:
+                                  'Quirófano equipado con tecnología de punta y monitoreo constante.',
+                            ),
+                            const SizedBox(height: 24),
+                            _ServiceCard(
+                              icon: Icons.vaccines_outlined,
+                              title: 'Vacunación',
+                              desc:
+                                  'Protocolos completos de inmunización para todas las etapas de vida.',
+                            ),
+                            const SizedBox(height: 24),
+                            _ServiceCard(
+                              icon: Icons.content_cut_outlined,
+                              title: 'Estética Canina',
+                              desc:
+                                  'Baños medicados, cortes de raza y limpieza dental profunda.',
+                            ),
+                          ]
+                          .animate(interval: 100.ms)
+                          .fade(duration: 600.ms)
+                          .slideY(
+                            begin: 0.1,
+                            duration: 600.ms,
+                            curve: Curves.easeOutCubic,
+                          ),
+                )
+              else
+                Row(
+                  children:
+                      [
+                            Expanded(
+                              child: _ServiceCard(
+                                icon: Icons.medical_services_outlined,
+                                title: 'Medicina General',
+                                desc:
+                                    'Consultas diarias, diagnóstico preciso y chequeos preventivos integrales.',
+                              ),
+                            ),
+                            const SizedBox(width: 24),
+                            Expanded(
+                              child: _ServiceCard(
+                                icon: Icons.medication_liquid_outlined,
+                                title: 'Cirugía Avanzada',
+                                desc:
+                                    'Quirófano equipado con tecnología de punta y monitoreo constante.',
+                              ),
+                            ),
+                            const SizedBox(width: 24),
+                            Expanded(
+                              child: _ServiceCard(
+                                icon: Icons.vaccines_outlined,
+                                title: 'Vacunación',
+                                desc:
+                                    'Protocolos completos de inmunización para todas las etapas de vida.',
+                              ),
+                            ),
+                            const SizedBox(width: 24),
+                            Expanded(
+                              child: _ServiceCard(
+                                icon: Icons.content_cut_outlined,
+                                title: 'Estética Canina',
+                                desc:
+                                    'Baños medicados, cortes de raza y limpieza dental profunda.',
+                              ),
+                            ),
+                          ]
+                          .animate(interval: 100.ms)
+                          .fade(duration: 600.ms)
+                          .slideY(
+                            begin: 0.1,
+                            duration: 600.ms,
+                            curve: Curves.easeOutCubic,
+                          ),
                 ),
-              ),
-              SizedBox(width: 24),
-              Expanded(
-                child: _ServiceCard(
-                  icon: Icons.content_cut_outlined,
-                  title: 'Estética Canina',
-                  desc:
-                      'Baños medicados, cortes de raza y limpieza dental profunda.',
-                ),
-              ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -245,17 +352,16 @@ class _ServiceCardState extends State<_ServiceCard> {
         padding: const EdgeInsets.all(32),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Theme.of(context).dividerColor),
-          boxShadow: _isHovering
-              ? [
-                  BoxShadow(
-                    color: Theme.of(context).shadowColor.withValues(alpha: 0.1),
-                    blurRadius: 20,
-                    offset: const Offset(0, 10),
-                  ),
-                ]
-              : [],
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).colorScheme.primary.withValues(
+                alpha: _isHovering ? 0.15 : 0.05,
+              ),
+              blurRadius: _isHovering ? 30 : 15,
+              offset: _isHovering ? const Offset(0, 15) : const Offset(0, 8),
+            ),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -324,42 +430,50 @@ class _PlanesSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 48),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _PricingCard(
-                title: 'Plan Cachorro',
-                price: '\$500',
-                features: [
-                  'Vacunas iniciales',
-                  'Desparasitación mensual',
-                  '1 Consulta gratis',
-                ],
-              ),
-              SizedBox(width: 24),
-              _PricingCard(
-                title: 'Plan Adulto',
-                price: '\$450',
-                features: [
-                  'Vacunas anuales completas',
-                  'Limpieza dental ultrasónico',
-                  '2 Consultas gratis',
-                  'Descuento en alimentos',
-                ],
-                isPopular: true,
-              ),
-              SizedBox(width: 24),
-              _PricingCard(
-                title: 'Plan Senior',
-                price: '\$600',
-                features: [
-                  'Geriatría especializada',
-                  'Análisis de sangre completo',
-                  '3 Consultas gratis',
-                ],
-              ),
-            ],
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.end,
+            alignment: WrapAlignment.center,
+            spacing: 24,
+            runSpacing: 24,
+            children:
+                [
+                      _PricingCard(
+                        title: 'Plan Cachorro',
+                        price: '\$500',
+                        features: [
+                          'Vacunas iniciales',
+                          'Desparasitación mensual',
+                          '1 Consulta gratis',
+                        ],
+                      ),
+                      _PricingCard(
+                        title: 'Plan Adulto',
+                        price: '\$450',
+                        features: [
+                          'Vacunas anuales completas',
+                          'Limpieza dental ultrasónico',
+                          '2 Consultas gratis',
+                          'Descuento en alimentos',
+                        ],
+                        isPopular: true,
+                      ),
+                      _PricingCard(
+                        title: 'Plan Senior',
+                        price: '\$600',
+                        features: [
+                          'Geriatría especializada',
+                          'Análisis de sangre completo',
+                          '3 Consultas gratis',
+                        ],
+                      ),
+                    ]
+                    .animate(interval: 150.ms)
+                    .fade(duration: 600.ms)
+                    .scale(
+                      begin: const Offset(0.95, 0.95),
+                      duration: 600.ms,
+                      curve: Curves.easeOutCubic,
+                    ),
           ),
         ],
       ),
@@ -387,24 +501,24 @@ class _PricingCard extends StatelessWidget {
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(30),
         border: isPopular
             ? Border.all(
-                color: Theme.of(context).colorScheme.tertiary,
+                color: Theme.of(
+                  context,
+                ).colorScheme.tertiary.withValues(alpha: 0.5),
                 width: 2,
               )
-            : Border.all(color: Theme.of(context).dividerColor),
-        boxShadow: isPopular
-            ? [
-                BoxShadow(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.tertiary.withValues(alpha: 0.2),
-                  blurRadius: 30,
-                  offset: const Offset(0, 10),
-                ),
-              ]
-            : [],
+            : Border.all(color: Colors.transparent),
+        boxShadow: [
+          BoxShadow(
+            color: isPopular
+                ? Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.15)
+                : Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
+            blurRadius: isPopular ? 40 : 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -512,52 +626,103 @@ class _TestimoniosSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
-      color: Theme.of(context).colorScheme.surface,
-      child: Column(
-        children: [
-          Text(
-            'Lo que dicen nuestros clientes',
-            style: TextStyle(
-              fontSize: 36,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).textTheme.titleLarge?.color,
-            ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final bool isMobile = constraints.maxWidth < 900;
+        return Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 24 : 40,
+            vertical: 40,
           ),
-          const SizedBox(height: 48),
-          Row(
+          color: Theme.of(context).colorScheme.surface,
+          child: Column(
             children: [
-              Expanded(
-                child: _TestimonialCard(
-                  name: 'María González',
-                  pet: 'Dueña de "Max"',
-                  text:
-                      'La mejor atención que ha recibido mi perro. El equipo es increíblemente amable y profesional. ¡Gracias por todo!',
+              Text(
+                'Lo que dicen nuestros clientes',
+                style: TextStyle(
+                  fontSize: isMobile ? 28 : 36,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).textTheme.titleLarge?.color,
                 ),
+                textAlign: TextAlign.center,
               ),
-              SizedBox(width: 24),
-              Expanded(
-                child: _TestimonialCard(
-                  name: 'Carlos Ruiz',
-                  pet: 'Dueño de "Luna"',
-                  text:
-                      'Salvaron a mi gatita en una emergencia nocturna. Eternamente agradecido por su rápida respuesta y dedicación.',
+              const SizedBox(height: 48),
+              if (isMobile)
+                Column(
+                  children:
+                      [
+                            _TestimonialCard(
+                              name: 'María González',
+                              pet: 'Dueña de "Max"',
+                              text:
+                                  'La mejor atención que ha recibido mi perro. El equipo es increíblemente amable y profesional. ¡Gracias por todo!',
+                            ),
+                            const SizedBox(height: 24),
+                            _TestimonialCard(
+                              name: 'Carlos Ruiz',
+                              pet: 'Dueño de "Luna"',
+                              text:
+                                  'Salvaron a mi gatita en una emergencia nocturna. Eternamente agradecido por su rápida respuesta y dedicación.',
+                            ),
+                            const SizedBox(height: 24),
+                            _TestimonialCard(
+                              name: 'Ana Torres',
+                              pet: 'Dueña de "Rocky"',
+                              text:
+                                  'Los planes de salud son excelentes. Me ahorro mucho dinero al año y Rocky siempre tiene sus vacunas al día.',
+                            ),
+                          ]
+                          .animate(interval: 100.ms)
+                          .fade(duration: 600.ms)
+                          .slideY(
+                            begin: 0.1,
+                            duration: 600.ms,
+                            curve: Curves.easeOutCubic,
+                          ),
+                )
+              else
+                Row(
+                  children:
+                      [
+                            Expanded(
+                              child: _TestimonialCard(
+                                name: 'María González',
+                                pet: 'Dueña de "Max"',
+                                text:
+                                    'La mejor atención que ha recibido mi perro. El equipo es increíblemente amable y profesional. ¡Gracias por todo!',
+                              ),
+                            ),
+                            const SizedBox(width: 24),
+                            Expanded(
+                              child: _TestimonialCard(
+                                name: 'Carlos Ruiz',
+                                pet: 'Dueño de "Luna"',
+                                text:
+                                    'Salvaron a mi gatita en una emergencia nocturna. Eternamente agradecido por su rápida respuesta y dedicación.',
+                              ),
+                            ),
+                            const SizedBox(width: 24),
+                            Expanded(
+                              child: _TestimonialCard(
+                                name: 'Ana Torres',
+                                pet: 'Dueña de "Rocky"',
+                                text:
+                                    'Los planes de salud son excelentes. Me ahorro mucho dinero al año y Rocky siempre tiene sus vacunas al día.',
+                              ),
+                            ),
+                          ]
+                          .animate(interval: 100.ms)
+                          .fade(duration: 600.ms)
+                          .slideY(
+                            begin: 0.1,
+                            duration: 600.ms,
+                            curve: Curves.easeOutCubic,
+                          ),
                 ),
-              ),
-              SizedBox(width: 24),
-              Expanded(
-                child: _TestimonialCard(
-                  name: 'Ana Torres',
-                  pet: 'Dueña de "Rocky"',
-                  text:
-                      'Los planes de salud son excelentes. Me ahorro mucho dinero al año y Rocky siempre tiene sus vacunas al día.',
-                ),
-              ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -579,8 +744,16 @@ class _TestimonialCard extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Theme.of(context).dividerColor),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(
+              context,
+            ).colorScheme.primary.withValues(alpha: 0.05),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -645,54 +818,68 @@ class _BottomCtaSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
-      padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondary,
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Column(
-        children: [
-          Text(
-            '¿Listo para cuidar a tu mejor amigo?',
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.onPrimary,
-            ),
-            textAlign: TextAlign.center,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final bool isMobile = constraints.maxWidth < 900;
+        return Container(
+          width: double.infinity,
+          margin: EdgeInsets.symmetric(
+            horizontal: isMobile ? 24 : 40,
+            vertical: 40,
           ),
-          const SizedBox(height: 16),
-          Text(
-            'Agenda tu cita hoy mismo y recibe un 10% de descuento en tu\nprimera consulta.',
-            style: TextStyle(
-              fontSize: 16,
-              color: Theme.of(context).colorScheme.onPrimary,
-            ),
-            textAlign: TextAlign.center,
+          padding: EdgeInsets.symmetric(
+            vertical: 48,
+            horizontal: isMobile ? 16 : 24,
           ),
-          const SizedBox(height: 32),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/contacto');
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.onPrimary,
-              foregroundColor: Theme.of(context).colorScheme.primary,
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.secondary,
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: Column(
+            children: [
+              Text(
+                '¿Listo para cuidar a tu mejor amigo?',
+                style: TextStyle(
+                  fontSize: isMobile ? 24 : 32,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+                textAlign: TextAlign.center,
               ),
-            ),
-            child: Text(
-              'Reservar Cita Ahora',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
+              const SizedBox(height: 16),
+              Text(
+                'Agenda tu cita hoy mismo y recibe un 10% de descuento en tu\nprimera consulta.',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 32),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/contacto');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.onPrimary,
+                  foregroundColor: Theme.of(context).colorScheme.primary,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 16,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                child: Text(
+                  'Reservar Cita Ahora',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

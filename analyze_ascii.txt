@@ -1,0 +1,5 @@
+
+   info - The member 'build' overrides an inherited member but isn't annotated with '@override' - lib\screens\inicio_page.dart:819:10 - annotate_overrides
+   info - The member 'build' overrides an inherited member but isn't annotated with '@override' - lib\screens\nosotros_page.dart:28:10 - annotate_overrides
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\widgets\barra_navegacion.dart:342:60 - deprecated_member_use
+

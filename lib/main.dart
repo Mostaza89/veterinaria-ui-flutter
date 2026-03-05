@@ -9,12 +9,14 @@ import 'screens/contacto_page.dart';
 import 'screens/login_page.dart';
 import 'screens/perfil_page.dart';
 
-// Definición de nueva paleta de colores
-const Color vetPrimaryGreen = Color(0xFF10B981); // Verde salud
-const Color vetPrimaryBlue = Color(0xFF0EA5E9); // Azul clínico
-const Color vetAccentOrange = Color(0xFFF97316); // Botón de acción (Citas)
-const Color vetBackground = Color(0xFFF8FAFC); // Fondo blanco-grisáceo
-const Color vetTextDark = Color(0xFF334155); // Texto legible
+// Definición de nueva paleta de colores - Estilo "Soft Clinical"
+const Color vetPrimaryGreen = Color(0xFF14B8A6); // Teal suave y clínico
+const Color vetPrimaryBlue = Color(0xFF38BDF8); // Azul cielo fresco
+const Color vetAccentOrange = Color(
+  0xFFFBBF24,
+); // Ámbar cálido (Botones/Acción)
+const Color vetBackground = Color(0xFFF0FDF4); // Fondo blanco-menta muy claro
+const Color vetTextDark = Color(0xFF475569); // Texto gris pizarra suave
 
 void main() {
   runApp(const AppStateContainer());
@@ -110,9 +112,20 @@ class VetCareApp extends StatelessWidget {
           settings: settings,
           pageBuilder: (context, animation, secondaryAnimation) => page,
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: CurveTween(curve: Curves.easeInOut).animate(animation),
-              child: child,
+            final fadeAnim = CurveTween(
+              curve: Curves.easeInOut,
+            ).animate(animation);
+            final slideAnim =
+                Tween<Offset>(
+                  begin: const Offset(0.0, 0.05),
+                  end: Offset.zero,
+                ).animate(
+                  CurveTween(curve: Curves.easeOutCubic).animate(animation),
+                );
+
+            return SlideTransition(
+              position: slideAnim,
+              child: FadeTransition(opacity: fadeAnim, child: child),
             );
           },
           transitionDuration: const Duration(milliseconds: 400),

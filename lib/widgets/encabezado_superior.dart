@@ -17,13 +17,16 @@ class TopHeader extends StatelessWidget {
             size: 16,
           ),
           SizedBox(width: 8),
-          Text(
-            'EMERGENCIAS 24/7: Llámanos al 555-0123',
-            style: TextStyle(
-              color: Theme.of(context).cardColor,
-              fontWeight: FontWeight.w900,
-              fontSize: 14,
-              letterSpacing: 0.5,
+          Flexible(
+            child: Text(
+              'EMERGENCIAS 24/7: Llámanos al 555-0123',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Theme.of(context).cardColor,
+                fontWeight: FontWeight.w900,
+                fontSize: 14,
+                letterSpacing: 0.5,
+              ),
             ),
           ),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../widgets/diseno_comun.dart';
 import '../widgets/botones.dart';
 
@@ -26,157 +27,194 @@ class _HeroBlogSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 60),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            flex: 1,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.energy_savings_leaf,
-                        color: Theme.of(context).colorScheme.secondary,
-                        size: 14,
-                      ),
-                      SizedBox(width: 6),
-                      Text(
-                        'BLOG DE BIENESTAR',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 24),
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                      fontSize: 48,
-                      fontWeight: FontWeight.w900,
-                      color: Theme.of(context).textTheme.titleLarge?.color,
-                      height: 1.1,
-                      fontFamily: 'Roboto',
-                    ),
-                    children: [
-                      TextSpan(text: 'Cuidado Animal\n'),
-                      TextSpan(
-                        text: 'Bajo Cielos Azules',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 24),
-                Text(
-                  'Descubre consejos brillantes, guías de hidratación y todo lo\nnecesario para mantener a tu mascota feliz y saludable con\nun toque refrescante.',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).textTheme.bodyMedium?.color,
-                    height: 1.6,
-                  ),
-                ),
-              ],
-            ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final bool isMobile = constraints.maxWidth < 900;
+        return Container(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 24 : 40,
+            vertical: isMobile ? 40 : 60,
           ),
-          Expanded(
-            flex: 1,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: Image.network(
-                    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=80&w=800&h=600',
-                    fit: BoxFit.cover,
-                    height: 350,
-                    width: double.infinity,
-                  ),
-                ),
-                Positioned(
-                  bottom: -20,
-                  left: -30,
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.05),
-                          blurRadius: 20,
-                          offset: const Offset(0, 10),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Color(0xFFE8F5E9),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.verified,
-                            color: Colors.green,
-                            size: 24,
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Artículo Destacado',
-                              style: TextStyle(
-                                fontSize: 12,
+          child: Flex(
+            direction: isMobile ? Axis.vertical : Axis.horizontal,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: isMobile ? 0 : 1,
+                child: Column(
+                  crossAxisAlignment: isMobile
+                      ? CrossAxisAlignment.center
+                      : CrossAxisAlignment.start,
+                  children:
+                      [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 6,
+                              ),
+                              decoration: BoxDecoration(
                                 color: Theme.of(
                                   context,
-                                ).textTheme.bodySmall?.color,
+                                ).colorScheme.primaryContainer,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.energy_savings_leaf,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.secondary,
+                                    size: 14,
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    'BLOG DE BIENESTAR',
+                                    style: TextStyle(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.primary,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
+                            const SizedBox(height: 24),
+                            RichText(
+                              textAlign: isMobile
+                                  ? TextAlign.center
+                                  : TextAlign.left,
+                              text: TextSpan(
+                                style: TextStyle(
+                                  fontSize: isMobile ? 36 : 48,
+                                  fontWeight: FontWeight.w900,
+                                  color: Theme.of(
+                                    context,
+                                  ).textTheme.titleLarge?.color,
+                                  height: 1.1,
+                                  fontFamily: 'Roboto',
+                                ),
+                                children: [
+                                  TextSpan(text: 'Cuidado Animal\n'),
+                                  TextSpan(
+                                    text: 'Bajo Cielos Azules',
+                                    style: TextStyle(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.primary,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 24),
                             Text(
-                              'Hidratación Vital',
+                              'Descubre consejos brillantes, guías de hidratación y todo lo\nnecesario para mantener a tu mascota feliz y saludable con\nun toque refrescante.',
+                              textAlign: isMobile
+                                  ? TextAlign.center
+                                  : TextAlign.left,
                               style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold,
                                 color: Theme.of(
                                   context,
-                                ).textTheme.titleLarge?.color,
+                                ).textTheme.bodyMedium?.color,
+                                height: 1.6,
                               ),
+                            ),
+                          ]
+                          .animate(interval: 100.ms)
+                          .fade(duration: 600.ms)
+                          .slideY(begin: 0.05, duration: 600.ms),
+                ),
+              ),
+              SizedBox(width: isMobile ? 0 : 48, height: isMobile ? 48 : 0),
+              Expanded(
+                flex: isMobile ? 0 : 1,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Image.network(
+                        'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=80&w=800&h=600',
+                        fit: BoxFit.cover,
+                        height: isMobile ? 250 : 350,
+                        width: double.infinity,
+                      ),
+                    ),
+                    Positioned(
+                      bottom: -20,
+                      left: isMobile ? 20 : -30,
+                      child: Container(
+                        padding: EdgeInsets.all(isMobile ? 16 : 20),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius: BorderRadius.circular(24),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.primary.withValues(alpha: 0.08),
+                              blurRadius: 25,
+                              offset: const Offset(0, 12),
                             ),
                           ],
                         ),
-                      ],
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE8F5E9),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.verified,
+                                color: Colors.green,
+                                size: 24,
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Artículo Destacado',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Theme.of(
+                                      context,
+                                    ).textTheme.bodySmall?.color,
+                                  ),
+                                ),
+                                Text(
+                                  'Hidratación Vital',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(
+                                      context,
+                                    ).textTheme.titleLarge?.color,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -271,79 +309,93 @@ class _BlogGridSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
-      color: Theme.of(context).cardColor,
-      child: GridView.count(
-        crossAxisCount: 3,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        mainAxisSpacing: 32,
-        crossAxisSpacing: 32,
-        childAspectRatio: 0.8,
-        children: [
-          _BlogCard(
-            imageUrl:
-                'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=600&h=400',
-            category: 'Salud',
-            date: '12 Oct, 2023',
-            readTime: '5 min lectura',
-            title: 'La Importancia de la Hidratación Diaria',
-            desc:
-                'El agua fresca es vital para el funcionamiento renal de tu mascota. Descubre cómo fomentar el consumo de agua.',
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        int crossAxisCount = 3;
+        if (constraints.maxWidth < 600) {
+          crossAxisCount = 1;
+        } else if (constraints.maxWidth < 1000) {
+          crossAxisCount = 2;
+        }
+
+        return Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: constraints.maxWidth < 900 ? 24 : 40,
+            vertical: 24,
           ),
-          _BlogCard(
-            imageUrl:
-                'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=80&w=600&h=400',
-            category: 'Estilo de Vida',
-            date: '10 Oct, 2023',
-            readTime: '3 min lectura',
-            title: 'Paseos bajo el Sol: Guía Segura',
-            desc:
-                'Cómo proteger las almohadillas de tu perro en días soleados y evitar golpes de calor durante el ejercicio.',
+          color: Theme.of(context).cardColor,
+          child: GridView.count(
+            crossAxisCount: crossAxisCount,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            mainAxisSpacing: 32,
+            crossAxisSpacing: 32,
+            childAspectRatio: crossAxisCount == 1 ? 0.9 : 0.8,
+            children: [
+              _BlogCard(
+                imageUrl:
+                    'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=600&h=400',
+                category: 'Salud',
+                date: '12 Oct, 2023',
+                readTime: '5 min lectura',
+                title: 'La Importancia de la Hidratación Diaria',
+                desc:
+                    'El agua fresca es vital para el funcionamiento renal de tu mascota. Descubre cómo fomentar el consumo de agua.',
+              ),
+              _BlogCard(
+                imageUrl:
+                    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=80&w=600&h=400',
+                category: 'Estilo de Vida',
+                date: '10 Oct, 2023',
+                readTime: '3 min lectura',
+                title: 'Paseos bajo el Sol: Guía Segura',
+                desc:
+                    'Cómo proteger las almohadillas de tu perro en días soleados y evitar golpes de calor durante el ejercicio.',
+              ),
+              _BlogCard(
+                imageUrl:
+                    'https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&q=80&w=600&h=400',
+                category: 'Nutrición',
+                date: '08 Oct, 2023',
+                readTime: '6 min lectura',
+                title: 'Nutrición para Pelajes Brillantes',
+                desc:
+                    'Los ácidos grasos Omega-3 y Omega-6 son esenciales. Descubre qué alimentos hacen brillar a tu mascota.',
+              ),
+              _BlogCard(
+                imageUrl:
+                    'https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&q=80&w=600&h=400',
+                category: 'Ejercicio',
+                date: '05 Oct, 2023',
+                readTime: '4 min lectura',
+                title: 'El Cielo es el Límite: Ejercicio',
+                desc:
+                    'Actividades al aire libre para gatos y perros que estimulan tanto su mente como su cuerpo.',
+              ),
+              _BlogCard(
+                imageUrl:
+                    'https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&q=80&w=600&h=400',
+                category: 'Higiene',
+                date: '01 Oct, 2023',
+                readTime: '7 min lectura',
+                title: 'Baños Refrescantes: Tips',
+                desc:
+                    'Haciendo del baño una experiencia relajante y divertida para mascotas que temen al agua.',
+              ),
+              _BlogCard(
+                imageUrl:
+                    'https://images.unsplash.com/photo-1522276498395-f4f68f7f8454?auto=format&fit=crop&q=80&w=600&h=400',
+                category: 'Diversión',
+                date: '28 Sep, 2023',
+                readTime: '4 min lectura',
+                title: 'Juguetes Seguros y Divertidos',
+                desc:
+                    'Eligiendo lo mejor para su entretenimiento, evitando materiales tóxicos o piezas pequeñas peligrosas.',
+              ),
+            ].animate(interval: 50.ms).fade(duration: 400.ms).scale(begin: const Offset(0.95, 0.95), curve: Curves.easeOutCubic),
           ),
-          _BlogCard(
-            imageUrl:
-                'https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&q=80&w=600&h=400',
-            category: 'Nutrición',
-            date: '08 Oct, 2023',
-            readTime: '6 min lectura',
-            title: 'Nutrición para Pelajes Brillantes',
-            desc:
-                'Los ácidos grasos Omega-3 y Omega-6 son esenciales. Descubre qué alimentos hacen brillar a tu mascota.',
-          ),
-          _BlogCard(
-            imageUrl:
-                'https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&q=80&w=600&h=400',
-            category: 'Ejercicio',
-            date: '05 Oct, 2023',
-            readTime: '4 min lectura',
-            title: 'El Cielo es el Límite: Ejercicio',
-            desc:
-                'Actividades al aire libre para gatos y perros que estimulan tanto su mente como su cuerpo.',
-          ),
-          _BlogCard(
-            imageUrl:
-                'https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&q=80&w=600&h=400',
-            category: 'Higiene',
-            date: '01 Oct, 2023',
-            readTime: '7 min lectura',
-            title: 'Baños Refrescantes: Tips',
-            desc:
-                'Haciendo del baño una experiencia relajante y divertida para mascotas que temen al agua.',
-          ),
-          _BlogCard(
-            imageUrl:
-                'https://images.unsplash.com/photo-1522276498395-f4f68f7f8454?auto=format&fit=crop&q=80&w=600&h=400',
-            category: 'Diversión',
-            date: '28 Sep, 2023',
-            readTime: '4 min lectura',
-            title: 'Juguetes Seguros y Divertidos',
-            desc:
-                'Eligiendo lo mejor para su entretenimiento, evitando materiales tóxicos o piezas pequeñas peligrosas.',
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -382,17 +434,16 @@ class _BlogCardState extends State<_BlogCard> {
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: Theme.of(context).dividerColor, width: 1.5),
-          boxShadow: _isHovering
-              ? [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.08),
-                    blurRadius: 20,
-                    offset: const Offset(0, 10),
-                  ),
-                ]
-              : [],
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).colorScheme.primary.withValues(
+                alpha: _isHovering ? 0.12 : 0.04,
+              ),
+              blurRadius: _isHovering ? 25 : 12,
+              offset: _isHovering ? const Offset(0, 12) : const Offset(0, 6),
+            ),
+          ],
         ),
         child: Column(
           children: [
@@ -400,8 +451,8 @@ class _BlogCardState extends State<_BlogCard> {
               children: [
                 ClipRRect(
                   borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(24),
-                    topRight: Radius.circular(24),
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
                   ),
                   child: Image.network(
                     widget.imageUrl,

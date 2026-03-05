@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../widgets/diseno_comun.dart';
 import '../widgets/botones.dart';
 import '../auth_provider.dart';
@@ -41,179 +42,241 @@ class _ClientProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // User Info Header
-        Container(
-          padding: const EdgeInsets.all(32),
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Theme.of(context).dividerColor),
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).shadowColor.withValues(alpha: 0.05),
-                blurRadius: 20,
-                offset: const Offset(0, 10),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 50,
-                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                child: Icon(
-                  Icons.person,
-                  size: 50,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              const SizedBox(width: 32),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Juan Pérez',
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).textTheme.bodyLarge?.color,
+      children:
+          [
+                // User Info Header
+                Container(
+                  padding: const EdgeInsets.all(32),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.primary.withValues(alpha: 0.05),
+                        blurRadius: 30,
+                        offset: const Offset(0, 10),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.email_outlined,
-                          size: 18,
-                          color: Theme.of(context).disabledColor,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          'juan.perez@email.com',
-                          style: TextStyle(
-                            color: Theme.of(
+                    ],
+                  ),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final isMobile = constraints.maxWidth < 600;
+
+                      return Flex(
+                        direction: isMobile ? Axis.vertical : Axis.horizontal,
+                        children: [
+                          CircleAvatar(
+                            radius: isMobile ? 40 : 50,
+                            backgroundColor: Theme.of(
                               context,
-                            ).textTheme.bodyMedium?.color,
+                            ).colorScheme.primaryContainer,
+                            child: Icon(
+                              Icons.person,
+                              size: isMobile ? 40 : 50,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          SizedBox(
+                            width: isMobile ? 0 : 32,
+                            height: isMobile ? 16 : 0,
+                          ),
+                          Expanded(
+                            flex: isMobile ? 0 : 1,
+                            child: Column(
+                              crossAxisAlignment: isMobile
+                                  ? CrossAxisAlignment.center
+                                  : CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Juan Pérez',
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(
+                                      context,
+                                    ).textTheme.bodyLarge?.color,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Flex(
+                                  direction: isMobile
+                                      ? Axis.vertical
+                                      : Axis.horizontal,
+                                  crossAxisAlignment: isMobile
+                                      ? CrossAxisAlignment.center
+                                      : CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          Icons.email_outlined,
+                                          size: 18,
+                                          color: Theme.of(
+                                            context,
+                                          ).disabledColor,
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          'juan.perez@email.com',
+                                          style: TextStyle(
+                                            color: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium?.color,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      width: isMobile ? 0 : 24,
+                                      height: isMobile ? 8 : 0,
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          Icons.phone_outlined,
+                                          size: 18,
+                                          color: Theme.of(
+                                            context,
+                                          ).disabledColor,
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          '+52 555 123 4567',
+                                          style: TextStyle(
+                                            color: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium?.color,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: isMobile ? 0 : 32,
+                            height: isMobile ? 24 : 0,
+                          ),
+                          OutlineHoverButton(
+                            text: 'Cerrar Sesión',
+                            icon: Icons.logout,
+                            onPressed: () {
+                              authProvider.logout();
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                '/',
+                                (route) => false,
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(height: 48),
+
+                // Content (Appointments & Pets)
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final isMobile = constraints.maxWidth < 900;
+                    return Flex(
+                      direction: isMobile ? Axis.vertical : Axis.horizontal,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Left Column: Appointments
+                        Expanded(
+                          flex: isMobile ? 0 : 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Citas Pendientes',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(
+                                    context,
+                                  ).textTheme.bodyLarge?.color,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              _AppointmentCard(
+                                petName: 'Max (Perro)',
+                                date: '10 de Marzo, 2026',
+                                time: '10:00 AM',
+                                reason: 'Vacunación Anual',
+                              ),
+                              const SizedBox(height: 16),
+                              _AppointmentCard(
+                                petName: 'Luna (Gato)',
+                                date: '15 de Marzo, 2026',
+                                time: '04:30 PM',
+                                reason: 'Revisión General',
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(width: 24),
-                        Icon(
-                          Icons.phone_outlined,
-                          size: 18,
-                          color: Theme.of(context).disabledColor,
+                        SizedBox(
+                          width: isMobile ? 0 : 40,
+                          height: isMobile ? 40 : 0,
                         ),
-                        const SizedBox(width: 8),
-                        Text(
-                          '+52 555 123 4567',
-                          style: TextStyle(
-                            color: Theme.of(
-                              context,
-                            ).textTheme.bodyMedium?.color,
+                        // Right Column: Pets Medical History
+                        Expanded(
+                          flex: isMobile ? 0 : 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Mis Mascotas e Historial',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(
+                                    context,
+                                  ).textTheme.bodyLarge?.color,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              _PetHistoryCard(
+                                petName: 'Max',
+                                breed: 'Golden Retriever',
+                                age: '3 años',
+                                history: [
+                                  '05/01/2026 - Consulta General: Sano.',
+                                  '10/06/2025 - Desparasitación completada.',
+                                  '12/03/2025 - Vacuna Múltiple aplicada.',
+                                ],
+                              ),
+                              const SizedBox(height: 24),
+                              _PetHistoryCard(
+                                petName: 'Luna',
+                                breed: 'Gato Siamés',
+                                age: '1 año',
+                                history: [
+                                  '20/02/2026 - Esterilización: Recuperación exitosa.',
+                                  '15/01/2026 - Vacuna Rabia aplicada.',
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ],
-                    ),
-                  ],
+                    );
+                  },
                 ),
-              ),
-              OutlineHoverButton(
-                text: 'Cerrar Sesión',
-                icon: Icons.logout,
-                onPressed: () {
-                  authProvider.logout();
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    '/',
-                    (route) => false,
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 48),
-
-        // Content (Appointments & Pets)
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Left Column: Appointments
-            Expanded(
-              flex: 1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Citas Pendientes',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).textTheme.bodyLarge?.color,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  _AppointmentCard(
-                    petName: 'Max (Perro)',
-                    date: '10 de Marzo, 2026',
-                    time: '10:00 AM',
-                    reason: 'Vacunación Anual',
-                  ),
-                  const SizedBox(height: 16),
-                  _AppointmentCard(
-                    petName: 'Luna (Gato)',
-                    date: '15 de Marzo, 2026',
-                    time: '04:30 PM',
-                    reason: 'Revisión General',
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 40),
-            // Right Column: Pets Medical History
-            Expanded(
-              flex: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Mis Mascotas e Historial',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).textTheme.bodyLarge?.color,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  _PetHistoryCard(
-                    petName: 'Max',
-                    breed: 'Golden Retriever',
-                    age: '3 años',
-                    history: [
-                      '05/01/2026 - Consulta General: Sano.',
-                      '10/06/2025 - Desparasitación completada.',
-                      '12/03/2025 - Vacuna Múltiple aplicada.',
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  _PetHistoryCard(
-                    petName: 'Luna',
-                    breed: 'Gato Siamés',
-                    age: '1 año',
-                    history: [
-                      '20/02/2026 - Esterilización: Recuperación exitosa.',
-                      '15/01/2026 - Vacuna Rabia aplicada.',
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 48),
-        const _AppointmentForm(isAdmin: false),
-      ],
+                const SizedBox(height: 48),
+                const _AppointmentForm(isAdmin: false),
+              ]
+              .animate(interval: 150.ms)
+              .fade(duration: 600.ms)
+              .slideY(begin: 0.1, duration: 600.ms, curve: Curves.easeOutCubic),
     );
   }
 }
@@ -232,72 +295,95 @@ class _AdminDashboardState extends State<_AdminDashboard> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Panel de Administrador',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).textTheme.bodyLarge?.color,
+      children:
+          [
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final isMobile = constraints.maxWidth < 600;
+                    return Flex(
+                      direction: isMobile ? Axis.vertical : Axis.horizontal,
+                      mainAxisAlignment: isMobile
+                          ? MainAxisAlignment.start
+                          : MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: isMobile
+                          ? CrossAxisAlignment.start
+                          : CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Panel de Administrador',
+                          style: TextStyle(
+                            fontSize: isMobile ? 24 : 32,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).textTheme.bodyLarge?.color,
+                          ),
+                        ),
+                        SizedBox(
+                          width: isMobile ? 0 : 16,
+                          height: isMobile ? 16 : 0,
+                        ),
+                        OutlineHoverButton(
+                          text: 'Cerrar Sesión',
+                          icon: Icons.logout,
+                          onPressed: () {
+                            authProvider.logout();
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              '/',
+                              (route) => false,
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                const SizedBox(height: 32),
+                Text(
+                  'Próximas citas de hoy',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                _AppointmentCard(
+                  petName: 'Rocky (Perro)',
+                  date: 'Hoy',
+                  time: '08:00 AM',
+                  reason: 'Consulta de Emergencia',
+                ),
+                const SizedBox(height: 16),
+                _AppointmentCard(
+                  petName: 'Bella (Gato)',
+                  date: 'Hoy',
+                  time: '11:00 AM',
+                  reason: 'Vacunación',
+                ),
+                const SizedBox(height: 48),
+                JellyButton(
+                  text: _showForm
+                      ? 'Cerrar Formulario'
+                      : 'Agregar Nueva Mascota/Cliente',
+                  icon: _showForm ? Icons.close : Icons.add,
+                  onPressed: () {
+                    setState(() {
+                      _showForm = !_showForm;
+                    });
+                  },
+                ),
+                if (_showForm) ...[
+                  const SizedBox(height: 48),
+                  const _AppointmentForm(isAdmin: true),
+                ],
+              ]
+              .animate(interval: 100.ms)
+              .fade(duration: 600.ms)
+              .slideY(
+                begin: 0.05,
+                duration: 600.ms,
+                curve: Curves.easeOutCubic,
               ),
-            ),
-            OutlineHoverButton(
-              text: 'Cerrar Sesión',
-              icon: Icons.logout,
-              onPressed: () {
-                authProvider.logout();
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  '/',
-                  (route) => false,
-                );
-              },
-            ),
-          ],
-        ),
-        const SizedBox(height: 32),
-        Text(
-          'Próximas citas de hoy',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).textTheme.bodyLarge?.color,
-          ),
-        ),
-        const SizedBox(height: 16),
-        _AppointmentCard(
-          petName: 'Rocky (Perro)',
-          date: 'Hoy',
-          time: '08:00 AM',
-          reason: 'Consulta de Emergencia',
-        ),
-        const SizedBox(height: 16),
-        _AppointmentCard(
-          petName: 'Bella (Gato)',
-          date: 'Hoy',
-          time: '11:00 AM',
-          reason: 'Vacunación',
-        ),
-        const SizedBox(height: 48),
-        JellyButton(
-          text: _showForm
-              ? 'Cerrar Formulario'
-              : 'Agregar Nueva Mascota/Cliente',
-          icon: _showForm ? Icons.close : Icons.add,
-          onPressed: () {
-            setState(() {
-              _showForm = !_showForm;
-            });
-          },
-        ),
-        if (_showForm) ...[
-          const SizedBox(height: 48),
-          const _AppointmentForm(isAdmin: true),
-        ],
-      ],
     );
   }
 }
@@ -323,8 +409,8 @@ class _AppointmentCard extends StatelessWidget {
         color: Theme.of(
           context,
         ).colorScheme.primaryContainer.withValues(alpha: 0.3),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Theme.of(context).dividerColor),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.transparent),
       ),
       child: Row(
         children: [
@@ -403,8 +489,16 @@ class _PetHistoryCard extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Theme.of(context).dividerColor),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(
+              context,
+            ).colorScheme.primary.withValues(alpha: 0.05),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -528,7 +622,6 @@ class _AppointmentFormState extends State<_AppointmentForm> {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(32),
-        border: Border.all(color: Theme.of(context).dividerColor),
         boxShadow: [
           BoxShadow(
             color: Theme.of(
@@ -553,51 +646,107 @@ class _AppointmentFormState extends State<_AppointmentForm> {
               ),
             ),
             const SizedBox(height: 32),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildFormField(
-                    label: widget.isAdmin ? 'Nombre del Cliente' : 'Tu Nombre',
-                    icon: Icons.person,
-                    controller: _nombreController,
-                    hint: 'Ej. Juan Pérez',
-                  ),
-                ),
-                const SizedBox(width: 24),
-                Expanded(
-                  child: _buildFormField(
-                    label: widget.isAdmin
-                        ? 'Nombre de la Mascota'
-                        : 'Tu Mascota',
-                    icon: Icons.pets,
-                    controller: _mascotaController,
-                    hint: 'Ej. Firulais',
-                  ),
-                ),
-              ],
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final isMobile = constraints.maxWidth < 600;
+                return Flex(
+                  direction: isMobile ? Axis.vertical : Axis.horizontal,
+                  children: [
+                    if (isMobile)
+                      _buildFormField(
+                        label: widget.isAdmin
+                            ? 'Nombre del Cliente'
+                            : 'Tu Nombre',
+                        icon: Icons.person,
+                        controller: _nombreController,
+                        hint: 'Ej. Juan Pérez',
+                      )
+                    else
+                      Expanded(
+                        child: _buildFormField(
+                          label: widget.isAdmin
+                              ? 'Nombre del Cliente'
+                              : 'Tu Nombre',
+                          icon: Icons.person,
+                          controller: _nombreController,
+                          hint: 'Ej. Juan Pérez',
+                        ),
+                      ),
+                    SizedBox(
+                      width: isMobile ? 0 : 24,
+                      height: isMobile ? 16 : 0,
+                    ),
+                    if (isMobile)
+                      _buildFormField(
+                        label: widget.isAdmin
+                            ? 'Nombre de la Mascota'
+                            : 'Tu Mascota',
+                        icon: Icons.pets,
+                        controller: _mascotaController,
+                        hint: 'Ej. Firulais',
+                      )
+                    else
+                      Expanded(
+                        child: _buildFormField(
+                          label: widget.isAdmin
+                              ? 'Nombre de la Mascota'
+                              : 'Tu Mascota',
+                          icon: Icons.pets,
+                          controller: _mascotaController,
+                          hint: 'Ej. Firulais',
+                        ),
+                      ),
+                  ],
+                );
+              },
             ),
             if (widget.isAdmin) ...[
               const SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildFormField(
-                      label: 'Teléfono',
-                      icon: Icons.phone,
-                      controller: _telefonoController,
-                      hint: 'Ej. 555-123-4567',
-                    ),
-                  ),
-                  const SizedBox(width: 24),
-                  Expanded(
-                    child: _buildFormField(
-                      label: 'Correo Electrónico',
-                      icon: Icons.email,
-                      controller: _correoController,
-                      hint: 'Ej. cliente@correo.com',
-                    ),
-                  ),
-                ],
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final isMobile = constraints.maxWidth < 600;
+                  return Flex(
+                    direction: isMobile ? Axis.vertical : Axis.horizontal,
+                    children: [
+                      if (isMobile)
+                        _buildFormField(
+                          label: 'Teléfono',
+                          icon: Icons.phone,
+                          controller: _telefonoController,
+                          hint: 'Ej. 555-123-4567',
+                        )
+                      else
+                        Expanded(
+                          child: _buildFormField(
+                            label: 'Teléfono',
+                            icon: Icons.phone,
+                            controller: _telefonoController,
+                            hint: 'Ej. 555-123-4567',
+                          ),
+                        ),
+                      SizedBox(
+                        width: isMobile ? 0 : 24,
+                        height: isMobile ? 16 : 0,
+                      ),
+                      if (isMobile)
+                        _buildFormField(
+                          label: 'Correo Electrónico',
+                          icon: Icons.email,
+                          controller: _correoController,
+                          hint: 'Ej. cliente@correo.com',
+                        )
+                      else
+                        Expanded(
+                          child: _buildFormField(
+                            label: 'Correo Electrónico',
+                            icon: Icons.email,
+                            controller: _correoController,
+                            hint: 'Ej. cliente@correo.com',
+                          ),
+                        ),
+                    ],
+                  );
+                },
               ),
             ],
             const SizedBox(height: 24),

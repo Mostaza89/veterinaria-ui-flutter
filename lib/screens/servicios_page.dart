@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../widgets/diseno_comun.dart';
 import '../widgets/botones.dart';
 
@@ -25,111 +26,141 @@ class _HeroGlassSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 400,
-      margin: const EdgeInsets.all(40),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(40),
-        image: const DecorationImage(
-          image: NetworkImage(
-            'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&q=80&w=1200&h=600',
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final bool isMobile = constraints.maxWidth < 900;
+        return Container(
+          width: double.infinity,
+          height: isMobile ? 500 : 400,
+          margin: EdgeInsets.all(isMobile ? 20 : 40),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(40),
+            image: const DecorationImage(
+              image: NetworkImage(
+                'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&q=80&w=1200&h=600',
+              ),
+              fit: BoxFit.cover,
+            ),
           ),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 64),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(24),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-              child: Container(
-                width: 450,
-                padding: const EdgeInsets.all(32),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).cardColor.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(
-                    color: Theme.of(context).cardColor.withValues(alpha: 0.3),
-                    width: 1.5,
-                  ),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.3),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.circle,
-                            color: Theme.of(context).colorScheme.secondary,
-                            size: 10,
-                          ),
-                          SizedBox(width: 8),
-                          Text(
-                            'SERVICIOS INTEGRALES',
-                            style: TextStyle(
-                              color: Theme.of(context).cardColor,
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    RichText(
-                      text: TextSpan(
-                        style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.w900,
-                          color: Theme.of(context).cardColor,
-                          height: 1.1,
-                          fontFamily: 'Roboto',
-                        ),
-                        children: [
-                          TextSpan(text: 'Cuidamos a quienes\n'),
-                          TextSpan(
-                            text: 'más amas',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Tecnología de vanguardia y amor incondicional en cada consulta. Descubre nuestra gama completa de cuidados especializados.',
-                      style: TextStyle(
+          child: Align(
+            alignment: isMobile ? Alignment.center : Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: isMobile ? 0 : 64,
+                right: isMobile ? 0 : 0,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                  child: Container(
+                    width: isMobile ? constraints.maxWidth * 0.8 : 450,
+                    padding: const EdgeInsets.all(32),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor.withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(24),
+                      border: Border.all(
                         color: Theme.of(
                           context,
-                        ).cardColor.withValues(alpha: 0.9),
-                        fontSize: 14,
-                        height: 1.5,
+                        ).cardColor.withValues(alpha: 0.3),
+                        width: 1.5,
                       ),
                     ),
-                  ],
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: isMobile
+                          ? CrossAxisAlignment.center
+                          : CrossAxisAlignment.start,
+                      children:
+                          [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 6,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withValues(alpha: 0.3),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.circle,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.secondary,
+                                        size: 10,
+                                      ),
+                                      SizedBox(width: 8),
+                                      Text(
+                                        'SERVICIOS INTEGRALES',
+                                        style: TextStyle(
+                                          color: Theme.of(context).cardColor,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 1,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                RichText(
+                                  textAlign: isMobile
+                                      ? TextAlign.center
+                                      : TextAlign.left,
+                                  text: TextSpan(
+                                    style: TextStyle(
+                                      fontSize: isMobile ? 32 : 40,
+                                      fontWeight: FontWeight.w900,
+                                      color: Theme.of(context).cardColor,
+                                      height: 1.1,
+                                      fontFamily: 'Roboto',
+                                    ),
+                                    children: [
+                                      TextSpan(text: 'Cuidamos a quienes\n'),
+                                      TextSpan(
+                                        text: 'más amas',
+                                        style: TextStyle(
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.primary,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                Text(
+                                  'Tecnología de vanguardia y amor incondicional en cada consulta. Descubre nuestra gama completa de cuidados especializados.',
+                                  textAlign: isMobile
+                                      ? TextAlign.center
+                                      : TextAlign.left,
+                                  style: TextStyle(
+                                    color: Theme.of(
+                                      context,
+                                    ).cardColor.withValues(alpha: 0.9),
+                                    fontSize: 14,
+                                    height: 1.5,
+                                  ),
+                                ),
+                              ]
+                              .animate(interval: 100.ms)
+                              .fade(duration: 600.ms)
+                              .slideX(
+                                begin: -0.05,
+                                duration: 600.ms,
+                                curve: Curves.easeOutCubic,
+                              ),
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
@@ -197,69 +228,91 @@ class _ServiciosGridSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 48),
-          GridView.count(
-            crossAxisCount: 3,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            mainAxisSpacing: 32,
-            crossAxisSpacing: 32,
-            childAspectRatio: 0.65,
-            children: [
-              _ServiceDetailCard(
-                imageUrl:
-                    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=80&w=600&h=400',
-                icon: Icons.monitor_heart_outlined,
-                title: 'Consulta General',
-                desc:
-                    'Evaluación completa de la salud de tu mascota. Diagnóstico preventivo y tratamiento de enfermedades comunes con un enfoque integral.',
-                features: ['Chequeos de rutina', 'Control de peso'],
-                buttonText: 'Agendar Consulta',
-              ),
-              _ServiceDetailCard(
-                imageUrl:
-                    'https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&q=80&w=600&h=400',
-                icon: Icons.vaccines_outlined,
-                title: 'Vacunación',
-                desc:
-                    'Protocolos personalizados para proteger a tu compañero de enfermedades virales y bacterianas. ¡La prevención es clave!',
-                features: ['Calendario anual', 'Desparasitación'],
-                buttonText: 'Ver Calendario',
-              ),
-              _ServiceDetailCard(
-                imageUrl:
-                    'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=600&h=400',
-                icon: Icons.cut_outlined,
-                title: 'Cirugía',
-                desc:
-                    'Quirófanos equipados con tecnología de monitoreo avanzada. Realizamos desde esterilizaciones hasta cirugías de tejidos blandos.',
-                features: ['Anestesia inhalatoria', 'Monitoreo constante'],
-                buttonText: 'Más Información',
-              ),
-              _ServiceDetailCard(
-                imageUrl:
-                    'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&q=80&w=600&h=400',
-                icon: Icons.clean_hands_outlined,
-                title: 'Odontología',
-                desc:
-                    'Limpieza dental profunda por ultrasonido, extracciones y prevención de enfermedad periodontal.',
-                features: ['Profilaxis dental', 'Aliento fresco'],
-                buttonText: 'Reservar Limpieza',
-              ),
-              _ServiceDetailCard(
-                imageUrl:
-                    'https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&q=80&w=600&h=400',
-                icon: Icons.content_cut_outlined,
-                title: 'Estética y Spa',
-                desc:
-                    'Baños medicados, cortes de raza, corte de uñas y limpieza de oídos. Un servicio para que luzcan y se sientan increíbles.',
-                features: [
-                  'Productos hipoalergénicos',
-                  'Estilistas certificados',
-                ],
-                buttonText: 'Ver Paquetes',
-              ),
-              _EmergencyCard(),
-            ],
+          LayoutBuilder(
+            builder: (context, constraints) {
+              int crossAxisCount = 3;
+              if (constraints.maxWidth < 600) {
+                crossAxisCount = 1;
+              } else if (constraints.maxWidth < 900) {
+                crossAxisCount = 2;
+              }
+
+              return GridView.count(
+                crossAxisCount: crossAxisCount,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                mainAxisSpacing: 32,
+                crossAxisSpacing: 32,
+                childAspectRatio: crossAxisCount == 1 ? 0.8 : 0.65,
+                children:
+                    [
+                          _ServiceDetailCard(
+                            imageUrl:
+                                'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=80&w=600&h=400',
+                            icon: Icons.monitor_heart_outlined,
+                            title: 'Consulta General',
+                            desc:
+                                'Evaluación completa de la salud de tu mascota. Diagnóstico preventivo y tratamiento de enfermedades comunes con un enfoque integral.',
+                            features: ['Chequeos de rutina', 'Control de peso'],
+                            buttonText: 'Agendar Consulta',
+                          ),
+                          _ServiceDetailCard(
+                            imageUrl:
+                                'https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&q=80&w=600&h=400',
+                            icon: Icons.vaccines_outlined,
+                            title: 'Vacunación',
+                            desc:
+                                'Protocolos personalizados para proteger a tu compañero de enfermedades virales y bacterianas. ¡La prevención es clave!',
+                            features: ['Calendario anual', 'Desparasitación'],
+                            buttonText: 'Ver Calendario',
+                          ),
+                          _ServiceDetailCard(
+                            imageUrl:
+                                'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=600&h=400',
+                            icon: Icons.cut_outlined,
+                            title: 'Cirugía',
+                            desc:
+                                'Quirófanos equipados con tecnología de monitoreo avanzada. Realizamos desde esterilizaciones hasta cirugías de tejidos blandos.',
+                            features: [
+                              'Anestesia inhalatoria',
+                              'Monitoreo constante',
+                            ],
+                            buttonText: 'Más Información',
+                          ),
+                          _ServiceDetailCard(
+                            imageUrl:
+                                'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&q=80&w=600&h=400',
+                            icon: Icons.clean_hands_outlined,
+                            title: 'Odontología',
+                            desc:
+                                'Limpieza dental profunda por ultrasonido, extracciones y prevención de enfermedad periodontal.',
+                            features: ['Profilaxis dental', 'Aliento fresco'],
+                            buttonText: 'Reservar Limpieza',
+                          ),
+                          _ServiceDetailCard(
+                            imageUrl:
+                                'https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&q=80&w=600&h=400',
+                            icon: Icons.content_cut_outlined,
+                            title: 'Estética y Spa',
+                            desc:
+                                'Baños medicados, cortes de raza, corte de uñas y limpieza de oídos. Un servicio para que luzcan y se sientan increíbles.',
+                            features: [
+                              'Productos hipoalergénicos',
+                              'Estilistas certificados',
+                            ],
+                            buttonText: 'Ver Paquetes',
+                          ),
+                          const _EmergencyCard(),
+                        ]
+                        .animate(interval: 100.ms)
+                        .fade(duration: 600.ms)
+                        .scale(
+                          begin: const Offset(0.95, 0.95),
+                          duration: 600.ms,
+                          curve: Curves.easeOutCubic,
+                        ),
+              );
+            },
           ),
         ],
       ),
@@ -300,17 +353,16 @@ class _ServiceDetailCardState extends State<_ServiceDetailCard> {
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: Theme.of(context).dividerColor, width: 1.5),
-          boxShadow: _isHovering
-              ? [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
-                    blurRadius: 20,
-                    offset: const Offset(0, 10),
-                  ),
-                ]
-              : [],
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).colorScheme.primary.withValues(
+                alpha: _isHovering ? 0.15 : 0.05,
+              ),
+              blurRadius: _isHovering ? 30 : 15,
+              offset: _isHovering ? const Offset(0, 15) : const Offset(0, 8),
+            ),
+          ],
         ),
         child: Column(
           children: [
@@ -319,8 +371,8 @@ class _ServiceDetailCardState extends State<_ServiceDetailCard> {
               children: [
                 ClipRRect(
                   borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(24),
-                    topRight: Radius.circular(24),
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
                   ),
                   child: Image.network(
                     widget.imageUrl,
@@ -355,8 +407,10 @@ class _ServiceDetailCardState extends State<_ServiceDetailCard> {
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.1),
-                          blurRadius: 10,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.primary.withValues(alpha: 0.15),
+                          blurRadius: 15,
                         ),
                       ],
                     ),
@@ -455,8 +509,14 @@ class _EmergencyCard extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Theme.of(context).dividerColor),
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+            blurRadius: 30,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -513,78 +573,108 @@ class _DiagnosticoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(40),
-      padding: const EdgeInsets.all(40),
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: BorderRadius.circular(32),
-        border: Border.all(color: Theme.of(context).dividerColor),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Tecnología Diagnóstica de Punta',
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).textTheme.titleLarge?.color,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Nuestras instalaciones cuentan con laboratorio clínico propio, rayos X digitales y ecografía Doppler para obtener resultados precisos y rápidos.',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).textTheme.bodyMedium?.color,
-                    height: 1.5,
-                  ),
-                ),
-                const SizedBox(height: 32),
-                Row(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final bool isMobile = constraints.maxWidth < 900;
+        return Container(
+          margin: EdgeInsets.all(isMobile ? 20 : 40),
+          padding: EdgeInsets.all(isMobile ? 24 : 40),
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(32),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(
+                  context,
+                ).colorScheme.primary.withValues(alpha: 0.05),
+                blurRadius: 30,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: Flex(
+            direction: isMobile ? Axis.vertical : Axis.horizontal,
+            children: [
+              Expanded(
+                flex: isMobile ? 0 : 1,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _IconDetail(
-                      icon: Icons.science,
-                      color: Colors.blue,
-                      label: 'Laboratorio',
+                    Text(
+                      'Tecnología Diagnóstica de Punta',
+                      style: TextStyle(
+                        fontSize: isMobile ? 28 : 32,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).textTheme.titleLarge?.color,
+                      ),
                     ),
-                    const SizedBox(width: 24),
-                    _IconDetail(
-                      icon: Icons.medical_information,
-                      color: Colors.green,
-                      label: 'Rayos X',
+                    const SizedBox(height: 16),
+                    Text(
+                      'Nuestras instalaciones cuentan con laboratorio clínico propio, rayos X digitales y ecografía Doppler para obtener resultados precisos y rápidos.',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).textTheme.bodyMedium?.color,
+                        height: 1.5,
+                      ),
                     ),
-                    const SizedBox(width: 24),
-                    _IconDetail(
-                      icon: Icons.waves,
-                      color: Colors.purple,
-                      label: 'Ecografía',
+                    const SizedBox(height: 32),
+                    Wrap(
+                      spacing: 24,
+                      runSpacing: 24,
+                      children:
+                          [
+                                _IconDetail(
+                                  icon: Icons.science,
+                                  color: Colors.blue,
+                                  label: 'Laboratorio',
+                                ),
+                                _IconDetail(
+                                  icon: Icons.medical_information,
+                                  color: Colors.green,
+                                  label: 'Rayos X',
+                                ),
+                                _IconDetail(
+                                  icon: Icons.waves,
+                                  color: Colors.purple,
+                                  label: 'Ecografía',
+                                ),
+                              ]
+                              .animate(interval: 150.ms)
+                              .fade(duration: 600.ms)
+                              .scale(
+                                begin: const Offset(0.8, 0.8),
+                                duration: 600.ms,
+                                curve: Curves.easeOutBack,
+                              ),
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 48),
-          Expanded(
-            flex: 1,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(24),
-              child: Image.network(
-                'https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?auto=format&fit=crop&q=80&w=800&h=400',
-                height: 250,
-                width: double.infinity,
-                fit: BoxFit.cover,
               ),
-            ),
+              SizedBox(width: isMobile ? 0 : 48, height: isMobile ? 32 : 0),
+              Expanded(
+                flex: isMobile ? 0 : 1,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(24),
+                  child:
+                      Image.network(
+                            'https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?auto=format&fit=crop&q=80&w=800&h=400',
+                            height: 250,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          )
+                          .animate()
+                          .fade(duration: 800.ms)
+                          .slideX(
+                            begin: 0.1,
+                            duration: 800.ms,
+                            curve: Curves.easeOutCubic,
+                          ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

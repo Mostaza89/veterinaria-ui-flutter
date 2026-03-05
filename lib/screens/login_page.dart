@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../widgets/diseno_comun.dart';
 import '../widgets/botones.dart';
 import '../auth_provider.dart';
@@ -20,149 +21,164 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 60),
         color: Theme.of(context).colorScheme.surface,
         child: Center(
-          child: Container(
-            width: 450,
-            padding: const EdgeInsets.all(40),
-            decoration: BoxDecoration(
-              color: Theme.of(context).cardColor,
-              borderRadius: BorderRadius.circular(24),
-              border: Border.all(color: Theme.of(context).dividerColor),
-              boxShadow: [
-                BoxShadow(
-                  color: Theme.of(context).shadowColor.withValues(alpha: 0.05),
-                  blurRadius: 20,
-                  offset: const Offset(0, 10),
-                ),
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Icon(
-                  Icons.pets,
-                  color: Theme.of(context).colorScheme.primary,
-                  size: 48,
-                ),
-                const SizedBox(height: 24),
-                Text(
-                  'Iniciar Sesión',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).textTheme.bodyLarge?.color,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  'Ingresa a tu cuenta para continuar.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).textTheme.bodyMedium?.color,
-                  ),
-                ),
-                const SizedBox(height: 32),
-                Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.surfaceContainerHighest,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: _RoleButton(
-                          title: 'Soy Cliente',
-                          isSelected: isClient,
-                          onPressed: () => setState(() => isClient = true),
+          child:
+              Container(
+                    width: 450,
+                    padding: const EdgeInsets.all(40),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.primary.withValues(alpha: 0.05),
+                          blurRadius: 30,
+                          offset: const Offset(0, 10),
                         ),
-                      ),
-                      Expanded(
-                        child: _RoleButton(
-                          title: 'Soy Administrador',
-                          isSelected: !isClient,
-                          onPressed: () => setState(() => isClient = false),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 32),
-                _CustomTextField(
-                  label: 'Correo Electrónico',
-                  icon: Icons.email_outlined,
-                  onChanged: (value) {
-                    final text = value.toLowerCase();
-                    if (text.contains('admin')) {
-                      if (isClient) setState(() => isClient = false);
-                    } else {
-                      if (!isClient) setState(() => isClient = true);
-                    }
-                  },
-                ),
-                const SizedBox(height: 20),
-                _CustomTextField(
-                  label: 'Contraseña',
-                  icon: Icons.lock_outline,
-                  obscureText: true,
-                ),
-                const SizedBox(height: 16),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      '¿Olvidaste tu contraseña?',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
+                      ],
                     ),
-                  ),
-                ),
-                const SizedBox(height: 32),
-                JellyButton(
-                  text:
-                      'Ingresar como ${isClient ? 'Cliente' : 'Administrador'}',
-                  onPressed: () {
-                    authProvider.login(
-                      isClient ? UserRole.client : UserRole.admin,
-                    );
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      '/',
-                      (route) => false,
-                    );
-                  },
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '¿No tienes cuenta? ',
-                      style: TextStyle(
-                        color: Theme.of(context).textTheme.bodyMedium?.color,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Regístrate',
-                        style: TextStyle(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Icon(
+                          Icons.pets,
                           color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.bold,
+                          size: 48,
                         ),
-                      ),
+                        const SizedBox(height: 24),
+                        Text(
+                          'Iniciar Sesión',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).textTheme.bodyLarge?.color,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          'Ingresa a tu cuenta para continuar.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium?.color,
+                          ),
+                        ),
+                        const SizedBox(height: 32),
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.surfaceContainerHighest,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: _RoleButton(
+                                  title: 'Soy Cliente',
+                                  isSelected: isClient,
+                                  onPressed: () =>
+                                      setState(() => isClient = true),
+                                ),
+                              ),
+                              Expanded(
+                                child: _RoleButton(
+                                  title: 'Soy Administrador',
+                                  isSelected: !isClient,
+                                  onPressed: () =>
+                                      setState(() => isClient = false),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 32),
+                        _CustomTextField(
+                          label: 'Correo Electrónico',
+                          icon: Icons.email_outlined,
+                          onChanged: (value) {
+                            final text = value.toLowerCase();
+                            if (text.contains('admin')) {
+                              if (isClient) setState(() => isClient = false);
+                            } else {
+                              if (!isClient) setState(() => isClient = true);
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        _CustomTextField(
+                          label: 'Contraseña',
+                          icon: Icons.lock_outline,
+                          obscureText: true,
+                        ),
+                        const SizedBox(height: 16),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              '¿Olvidaste tu contraseña?',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 32),
+                        JellyButton(
+                          text:
+                              'Ingresar como ${isClient ? 'Cliente' : 'Administrador'}',
+                          onPressed: () {
+                            authProvider.login(
+                              isClient ? UserRole.client : UserRole.admin,
+                            );
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              '/',
+                              (route) => false,
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 24),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '¿No tienes cuenta? ',
+                              style: TextStyle(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyMedium?.color,
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                'Regístrate',
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+                  )
+                  .animate()
+                  .fade(duration: 500.ms)
+                  .slideY(
+                    begin: 0.1,
+                    duration: 500.ms,
+                    curve: Curves.easeOutCubic,
+                  ),
         ),
       ),
     );
